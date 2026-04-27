@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import type { GradeFilterState } from '~/types/grades'
+import type { GradeFilterState, StudentSubject } from '~/types/grades'
 import { mockSubjects, mockSemesters, mockStudent } from '~/data/mockGrades'
-import type { MockSubject } from '~/data/mockGrades'
 
 definePageMeta({ layout: 'student' })
 
 const filters = ref<GradeFilterState>({ search: '' })
 const loading = ref(false)
-const subjects = ref<MockSubject[]>([])
+const subjects = ref<StudentSubject[]>([])
 const page = ref(1)
 const perPage = 10
 

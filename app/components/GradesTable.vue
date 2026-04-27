@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { MockSubject } from '~/data/mockGrades'
+import type { AnySubject } from '~/types/grades'
 
 interface Props {
-  subjects: MockSubject[]
+  subjects: AnySubject[]
   loading?: boolean
   perPage?: number
   page?: number
@@ -15,6 +15,8 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const expanded = ref<string | null>(null)
+
+const isTeacher = computed(() => props.subjects[0]?.view === 'teacher')
 
 const paged = computed(() =>
   props.subjects.slice((props.page - 1) * props.perPage, props.page * props.perPage)
@@ -48,6 +50,7 @@ function toggle(id: string) {
             <tr class="grades-table__head-row">
               <th class="grades-table__th grades-table__th--toggle" />
               <th class="grades-table__th">Nazwa przedmiotu ▲</th>
+              <th v-if="isTeacher" class="grades-table__th">Student</th>
               <th class="grades-table__th grades-table__th--num">Liczba godzin</th>
               <th class="grades-table__th grades-table__th--num">Punkty ECTS</th>
               <th class="grades-table__th grades-table__th--num">Ocena</th>
@@ -73,6 +76,10 @@ function toggle(id: string) {
                 <td class="grades-table__td">
                   <span class="grades-table__name">{{ s.name }}</span>
                 </td>
+                <td v-if="isTeacher && s.view === 'teacher'" class="grades-table__td">
+                  <span class="grades-table__student-name">{{ s.studentName }}</span>
+                  <span class="grades-table__student-album">{{ s.studentAlbum }}</span>
+                </td>
                 <td class="grades-table__td grades-table__td--num">{{ s.hours }}</td>
                 <td class="grades-table__td grades-table__td--num grades-table__td--ects">{{ s.ects }}</td>
                 <td class="grades-table__td grades-table__td--num">
@@ -83,7 +90,7 @@ function toggle(id: string) {
               <!-- Detail row -->
               <Transition name="expand">
                 <tr v-if="expanded === s.id" class="grades-table__detail-row">
-                  <td colspan="5" class="grades-table__detail-cell">
+                  <td :colspan="isTeacher ? 6 : 5" class="grades-table__detail-cell">
                     <div class="grades-table__detail">
                       <div class="grades-table__detail-item">
                         <div class="grades-table__detail-label">Wykładowca</div>
@@ -96,6 +103,10 @@ function toggle(id: string) {
                       <div class="grades-table__detail-item">
                         <div class="grades-table__detail-label">Typ oceny</div>
                         <div class="grades-table__detail-value">Ocena końcowa</div>
+                      </div>
+                      <div v-if="s.view === 'teacher'" class="grades-table__detail-item">
+                        <div class="grades-table__detail-label">Nr albumu</div>
+                        <div class="grades-table__detail-value">{{ s.studentAlbum }}</div>
                       </div>
                     </div>
                   </td>
@@ -225,6 +236,18 @@ function toggle(id: string) {
   &__name {
     font-weight: 500;
     color: $color-ink;
+  }
+
+  &__student-name {
+    display: block;
+    font-weight: 500;
+    color: $color-ink;
+  }
+
+  &__student-album {
+    display: block;
+    font-size: 12px;
+    color: $color-ink-subtle;
   }
 
   // ─── Detail ────────────────────────────────────────────────────
