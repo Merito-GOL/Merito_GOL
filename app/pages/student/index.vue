@@ -1,38 +1,34 @@
 <script setup lang="ts">
-import type { GradeFilterState, Semester } from '~/types/grades'
+import type { GradeFilterState } from '~/types/grades'
 import { mockSubjects, mockSemesters, mockStudent } from '~/data/mockGrades'
 import type { MockSubject } from '~/data/mockGrades'
 
 definePageMeta({ layout: 'student' })
 
-// mockSemesters[0] = semester 4, [1] = 3, [2] = 2, [3] = 1
-const SEMESTER_MAP: Semester[] = [4, 3, 2, 1]
-
-const activeSemesterId = ref(0)
 const filters = ref<GradeFilterState>({ search: '' })
 const loading = ref(false)
 const subjects = ref<MockSubject[]>([])
+const page = ref(1)
+const perPage = 10
 
 onMounted(async () => {
   loading.value = true
   await new Promise(r => setTimeout(r, 500))
-  subjects.value = mockSubjects
+  subjects.value = mockSubjects.filter(s => s.semester === mockStudent.currentSemester)
   loading.value = false
 })
 
-const currentSemester = computed(() => mockSemesters[activeSemesterId.value])
+const currentSemester = computed(() => mockSemesters[0])
 
 const filteredSubjects = computed(() => {
-  const semNum = SEMESTER_MAP[activeSemesterId.value]
-  let result = subjects.value.filter(s => s.semester === semNum)
-
-  if (filters.value.search) {
-    const q = filters.value.search.toLowerCase()
-    result = result.filter(s => s.name.toLowerCase().includes(q))
-  }
-
-  return result
+  if (!filters.value.search) return subjects.value
+  const q = filters.value.search.toLowerCase()
+  return subjects.value.filter(s => s.name.toLowerCase().includes(q))
 })
+
+watch(filteredSubjects, () => { page.value = 1 })
+
+const totalPages = computed(() => Math.max(1, Math.ceil(filteredSubjects.value.length / perPage)))
 </script>
 
 <template>
@@ -48,34 +44,27 @@ const filteredSubjects = computed(() => {
 
     <h1 class="student-page__title">Oceny</h1>
 
-    <!-- Semester selector tabs -->
-    <div class="semester-tabs" role="tablist" aria-label="Semestry">
-      <button
-        v-for="(sem, idx) in mockSemesters"
-        :key="sem.id"
-        class="semester-tabs__tab"
-        :class="{ 'semester-tabs__tab--active': activeSemesterId === idx }"
-        role="tab"
-        :aria-selected="activeSemesterId === idx"
-        @click="activeSemesterId = idx; filters.semester = null"
-      >
-        {{ sem.label }}
-      </button>
-    </div>
+    <!-- Filter bar -->
+    <GradesFilter v-model="filters" />
 
-    <!-- Stats strip -->
-    <GradesStatsSummary :semester="currentSemester" />
-
-    <!-- Filter bar + table card -->
+    <!-- Table card -->
     <div class="student-page__card">
-      <GradesFilter v-model="filters" />
-
       <GradesTable
         :subjects="filteredSubjects"
         :loading="loading"
-        :per-page="10"
+        :per-page="perPage"
+        :page="page"
       />
     </div>
+
+    <GradesPagination
+      v-if="!loading && filteredSubjects.length"
+      :page="page"
+      :total-pages="totalPages"
+      :total="filteredSubjects.length"
+      :per-page="perPage"
+      @update:page="page = $event"
+    />
 
     <footer class="student-page__footer">
       MeritoGOŁ • Panel studenta • Zalogowany jako
@@ -118,15 +107,6 @@ const filteredSubjects = computed(() => {
     border: 1px solid $color-border;
     border-radius: $border-radius-card;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-
-    // filter gets padding, table sits flush
-    > :first-child {
-      padding: 14px 18px;
-      border-bottom: 1px solid $color-border;
-    }
   }
 
   &__footer {
@@ -137,35 +117,4 @@ const filteredSubjects = computed(() => {
   }
 }
 
-// ─── Semester tabs ─────────────────────────────────────────────────
-.semester-tabs {
-  display: flex;
-  gap: 0;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  &::-webkit-scrollbar { display: none; }
-
-  &__tab {
-    padding: 10px 18px;
-    border: none;
-    border-bottom: 2px solid transparent;
-    background: transparent;
-    font-family: $font-sans;
-    font-size: 13.5px;
-    font-weight: 500;
-    color: $color-ink-subtle;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: color $transition-base, border-color $transition-base;
-
-    &:hover { color: $color-ink; }
-
-    &--active {
-      color: $color-ink-dark;
-      font-weight: 700;
-      border-bottom-color: $color-accent;
-    }
-  }
-}
 </style>

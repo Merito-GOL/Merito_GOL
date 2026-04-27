@@ -5,25 +5,20 @@ interface Props {
   subjects: MockSubject[]
   loading?: boolean
   perPage?: number
+  page?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
   loading: false,
   perPage: 10,
+  page: 1,
 })
 
 const expanded = ref<string | null>(null)
-const page = ref(1)
-
-watch(() => props.subjects, () => { page.value = 1 })
-
-const totalPages = computed(() => Math.max(1, Math.ceil(props.subjects.length / props.perPage)))
 
 const paged = computed(() =>
-  props.subjects.slice((page.value - 1) * props.perPage, page.value * props.perPage)
+  props.subjects.slice((props.page - 1) * props.perPage, props.page * props.perPage)
 )
-
-const pageRange = computed(() => Array.from({ length: totalPages.value }, (_, i) => i + 1))
 
 function toggle(id: string) {
   expanded.value = expanded.value === id ? null : id
@@ -111,43 +106,6 @@ function toggle(id: string) {
         </table>
       </div>
 
-      <!-- Footer -->
-      <div v-if="subjects.length" class="grades-table-footer">
-        <span class="grades-table-footer__info">
-          Wyświetlanie:
-          {{ (page - 1) * perPage + 1 }}–{{ Math.min(page * perPage, subjects.length) }}
-          / {{ subjects.length }}
-        </span>
-
-        <div class="grades-table-footer__pages" role="navigation" aria-label="Strony">
-          <button
-            class="grades-table-footer__page-btn"
-            :disabled="page === 1"
-            @click="page--"
-          >‹</button>
-
-          <button
-            v-for="p in pageRange"
-            :key="p"
-            class="grades-table-footer__page-btn"
-            :class="{ 'grades-table-footer__page-btn--active': page === p }"
-            @click="page = p"
-          >{{ p }}</button>
-
-          <button
-            class="grades-table-footer__page-btn"
-            :disabled="page === totalPages"
-            @click="page++"
-          >›</button>
-        </div>
-
-        <div class="grades-table-footer__per-page">
-          Pokaż na stronie:
-          <select class="grades-table-footer__select" disabled>
-            <option>{{ perPage }}</option>
-          </select>
-        </div>
-      </div>
     </template>
   </div>
 </template>
@@ -229,7 +187,7 @@ function toggle(id: string) {
     border-bottom: 1px solid $color-border-light;
 
     &:hover     { background: $color-surface-hover; }
-    &--open     { background: $color-surface-hover; }
+    &--open     { background: $color-surface-card; }
     &:last-child { border-bottom: none; }
   }
 
@@ -270,19 +228,16 @@ function toggle(id: string) {
   }
 
   // ─── Detail ────────────────────────────────────────────────────
-  &__detail-row { background: $color-surface-hover; }
+  &__detail-row { background: $color-surface; }
 
-  &__detail-cell { padding: 0 18px 16px 56px; }
+  &__detail-cell { padding: 0 18px 0px 56px; }
 
   &__detail {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
     font-size: 13px;
-    padding: 16px;
-    background: $color-surface-muted;
-    border-top: 1px solid $color-border-light;
-    border-radius: 0 0 4px 4px;
+    padding: 16px 0;
 
     @media (max-width: 600px) {
       grid-template-columns: 1fr;
@@ -304,64 +259,6 @@ function toggle(id: string) {
   }
 }
 
-// ─── Footer ────────────────────────────────────────────────────────
-.grades-table-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 4px;
-  font-size: 13px;
-  color: $color-ink-faint;
-  flex-wrap: wrap;
-  gap: 8px;
-
-  &__info { white-space: nowrap; }
-
-  &__pages {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  &__page-btn {
-    width: 30px;
-    height: 30px;
-    border-radius: 6px;
-    border: 1px solid $color-border-input;
-    background: $color-surface-card;
-    color: $color-ink;
-    cursor: pointer;
-    font-family: $font-sans;
-    font-size: 13px;
-    transition: background $transition-base;
-
-    &:hover:not(:disabled) { background: $color-surface-muted; }
-    &:disabled { opacity: 0.35; cursor: default; }
-
-    &--active {
-      background: $color-ink-dark;
-      color: #fff;
-      border-color: $color-ink-dark;
-    }
-  }
-
-  &__per-page {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
-  }
-
-  &__select {
-    padding: 5px 10px;
-    border: 1.5px solid $color-border-input;
-    border-radius: 8px;
-    font-family: $font-sans;
-    font-size: 13px;
-    background: $color-surface-card;
-    color: $color-ink;
-  }
-}
 
 // ─── Expand transition ─────────────────────────────────────────────
 .expand-enter-active,
