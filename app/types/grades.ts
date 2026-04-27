@@ -11,7 +11,9 @@ export interface StudentProfile {
   currentSemester: Semester
 }
 
-export interface BaseSubject {
+// ─── Student view ──────────────────────────────────────────────────
+
+export interface StudentSubject {
   id: string
   name: string
   hours: number
@@ -23,17 +25,27 @@ export interface BaseSubject {
   semester: Semester
 }
 
-export interface StudentSubject extends BaseSubject {
-  view: 'student'
+// ─── Teacher view ──────────────────────────────────────────────────
+
+export const GRADE_OPTIONS = ['5,0', '4,5', '4,0', '3,5', '3,0', '2,0', '—'] as const
+export type GradeOption = typeof GRADE_OPTIONS[number]
+
+export interface RosterStudent {
+  id: string
+  name: string
 }
 
-export interface TeacherSubject extends BaseSubject {
-  view: 'teacher'
-  studentName: string
-  studentAlbum: string
+export interface TeachingAssignment {
+  id: string
+  name: string
+  hours: number
+  ects: number
+  group: string
+  semester: Semester
+  studentCount: number
 }
 
-export type AnySubject = StudentSubject | TeacherSubject
+// ─── Shared ────────────────────────────────────────────────────────
 
 export interface GradeFilterState {
   search: string
