@@ -1,154 +1,86 @@
 <script setup lang="ts">
-import type { GradeFilterState, Subject } from '~/types/grades'
-import { mockSubjects, mockStudent } from '~/data/mockGrades'
+import type { GradeFilterState, Semester } from '~/types/grades'
+import { mockSubjects, mockSemesters, mockStudent } from '~/data/mockGrades'
+import type { MockSubject } from '~/data/mockGrades'
 
 definePageMeta({ layout: 'student' })
 
-type ViewMode = 'table' | 'cards'
+// mockSemesters[0] = semester 4, [1] = 3, [2] = 2, [3] = 1
+const SEMESTER_MAP: Semester[] = [4, 3, 2, 1]
 
-const viewMode = ref<ViewMode>('table')
-
-const filters = ref<GradeFilterState>({
-  search:    '',
-  semester:  null,
-  type:      null,
-  minGrade:  null,
-})
-
+const activeSemesterId = ref(0)
+const filters = ref<GradeFilterState>({ search: '' })
 const loading = ref(false)
-const subjects = ref<Subject[]>([])
+const subjects = ref<MockSubject[]>([])
 
-// Simulate async fetch
 onMounted(async () => {
   loading.value = true
-  await new Promise(r => setTimeout(r, 600))
+  await new Promise(r => setTimeout(r, 500))
   subjects.value = mockSubjects
   loading.value = false
 })
 
-const filteredSubjects = computed<Subject[]>(() => {
-  let result = subjects.value
+const currentSemester = computed(() => mockSemesters[activeSemesterId.value])
+
+const filteredSubjects = computed(() => {
+  const semNum = SEMESTER_MAP[activeSemesterId.value]
+  let result = subjects.value.filter(s => s.semester === semNum)
 
   if (filters.value.search) {
     const q = filters.value.search.toLowerCase()
-    result = result.filter(s =>
-      s.name.toLowerCase().includes(q) ||
-      s.code.toLowerCase().includes(q) ||
-      s.teacherName.toLowerCase().includes(q)
-    )
-  }
-
-  if (filters.value.semester !== null) {
-    result = result.filter(s => s.semester === filters.value.semester)
-  }
-
-  if (filters.value.type !== null) {
-    result = result.filter(s =>
-      s.grades.some(g => g.type === filters.value.type)
-    )
-  }
-
-  if (filters.value.minGrade !== null) {
-    result = result.filter(s =>
-      s.finalGrade !== null && s.finalGrade >= (filters.value.minGrade as number)
-    )
+    result = result.filter(s => s.name.toLowerCase().includes(q))
   }
 
   return result
 })
-
-function handleCardClick(id: string) {
-  // Future: navigate to detail or expand
-  console.log('Subject clicked:', id)
-}
 </script>
 
 <template>
   <div class="student-page">
-    <!-- Page header -->
-    <header class="student-page__header">
-      <div class="student-page__header-text">
-        <h1 class="student-page__title">Moje oceny</h1>
-        <p class="student-page__subtitle">
-          {{ mockStudent.firstName }} {{ mockStudent.lastName }}
-          · Nr albumu {{ mockStudent.albumNumber }}
-          · {{ mockStudent.program }}
-        </p>
-      </div>
+    <!-- Breadcrumbs -->
+    <nav class="student-page__breadcrumb" aria-label="Ścieżka nawigacji">
+      <span class="student-page__breadcrumb-home">🏠</span>
+      <span class="student-page__breadcrumb-sep">›</span>
+      <span>Pulpit</span>
+      <span class="student-page__breadcrumb-sep">›</span>
+      <span class="student-page__breadcrumb-current">Oceny</span>
+    </nav>
 
-      <!-- View toggle -->
-      <div class="student-page__view-toggle" role="group" aria-label="Widok">
-        <button
-          class="student-page__view-btn"
-          :class="{ 'student-page__view-btn--active': viewMode === 'table' }"
-          aria-label="Widok tabeli"
-          @click="viewMode = 'table'"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <line x1="3" y1="6"  x2="21" y2="6"  /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
-        <button
-          class="student-page__view-btn"
-          :class="{ 'student-page__view-btn--active': viewMode === 'cards' }"
-          aria-label="Widok kart"
-          @click="viewMode = 'cards'"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <rect x="3"  y="3"  width="7" height="7" rx="1" /><rect x="14" y="3"  width="7" height="7" rx="1" />
-            <rect x="3"  y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" />
-          </svg>
-        </button>
-      </div>
-    </header>
+    <h1 class="student-page__title">Oceny</h1>
 
-    <!-- Stats -->
-    <section aria-label="Statystyki" class="student-page__section">
-      <GradesStatsSummary :subjects="subjects" />
-    </section>
+    <!-- Semester selector tabs -->
+    <div class="semester-tabs" role="tablist" aria-label="Semestry">
+      <button
+        v-for="(sem, idx) in mockSemesters"
+        :key="sem.id"
+        class="semester-tabs__tab"
+        :class="{ 'semester-tabs__tab--active': activeSemesterId === idx }"
+        role="tab"
+        :aria-selected="activeSemesterId === idx"
+        @click="activeSemesterId = idx; filters.semester = null"
+      >
+        {{ sem.label }}
+      </button>
+    </div>
 
-    <!-- Filters + content card -->
-    <section class="student-page__section student-page__content-card">
-      <div class="student-page__content-header">
-        <h2 class="student-page__section-title">
-          Przedmioty
-          <span v-if="!loading" class="student-page__count">
-            {{ filteredSubjects.length }} z {{ subjects.length }}
-          </span>
-        </h2>
-      </div>
+    <!-- Stats strip -->
+    <GradesStatsSummary :semester="currentSemester" />
 
+    <!-- Filter bar + table card -->
+    <div class="student-page__card">
       <GradesFilter v-model="filters" />
 
-      <div class="student-page__table-area">
-        <!-- Table view -->
-        <Transition name="view-switch" mode="out-in">
-          <GradesTable
-            v-if="viewMode === 'table'"
-            :subjects="filteredSubjects"
-            :loading="loading"
-          />
+      <GradesTable
+        :subjects="filteredSubjects"
+        :loading="loading"
+        :per-page="10"
+      />
+    </div>
 
-          <!-- Cards view -->
-          <div v-else class="student-page__cards-grid">
-            <template v-if="loading">
-              <div v-for="i in 6" :key="i" class="student-page__card-skeleton" />
-            </template>
-            <template v-else-if="filteredSubjects.length">
-              <GradesSubjectCard
-                v-for="subject in filteredSubjects"
-                :key="subject.id"
-                :subject="subject"
-                @click="handleCardClick"
-              />
-            </template>
-            <div v-else class="student-page__cards-empty">
-              <p>Brak wyników dla podanych filtrów.</p>
-            </div>
-          </div>
-        </Transition>
-      </div>
-    </section>
+    <footer class="student-page__footer">
+      MeritoGOŁ • Panel studenta • Zalogowany jako
+      <strong>{{ mockStudent.firstName }} {{ mockStudent.lastName }}</strong>
+    </footer>
   </div>
 </template>
 
@@ -158,154 +90,82 @@ function handleCardClick(id: string) {
 .student-page {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 18px;
 
-  &__header {
+  &__breadcrumb {
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    color: $color-ink-subtle;
+    margin-bottom: -4px;
 
-  &__header-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    &-home   { font-size: 13px; }
+    &-sep    { color: $color-border-input; }
+    &-current { color: $color-ink; font-weight: 600; }
   }
 
   &__title {
     margin: 0;
-    font-size: 1.75rem;
+    font-size: 30px;
     font-weight: 800;
+    letter-spacing: -0.02em;
     color: $color-ink;
-    letter-spacing: -0.03em;
   }
 
-  &__subtitle {
-    margin: 0;
-    font-size: 0.875rem;
-    color: $color-ink-muted;
-  }
-
-  // ─── View toggle ─────────────────────────────────────────────
-  &__view-toggle {
-    display: flex;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
+  &__card {
+    background: $color-surface-card;
+    border: 1px solid $color-border;
+    border-radius: $border-radius-card;
     overflow: hidden;
-    background: #fff;
-    padding: 2px;
-    gap: 2px;
-  }
-
-  &__view-btn {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border: none;
-    background: transparent;
-    color: $color-ink-subtle;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background $transition-base, color $transition-base;
+    flex-direction: column;
+    gap: 0;
 
-    &:hover { background: #f1f5f9; color: $color-ink; }
-
-    &--active {
-      background: $color-brand-600;
-      color: #fff;
-
-      &:hover { background: $color-brand-700; }
+    // filter gets padding, table sits flush
+    > :first-child {
+      padding: 14px 18px;
+      border-bottom: 1px solid $color-border;
     }
   }
 
-  // ─── Section ──────────────────────────────────────────────────
-  &__section {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  &__footer {
+    text-align: center;
+    color: $color-ink-subtle;
+    font-size: 12px;
+    padding: 20px 0 40px;
   }
+}
 
-  &__content-card {
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: $border-radius-card;
-    padding: 1.5rem;
-    gap: 1rem;
-  }
+// ─── Semester tabs ─────────────────────────────────────────────────
+.semester-tabs {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
 
-  &__content-header {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  &__section-title {
-    margin: 0;
-    font-size: 1.0625rem;
-    font-weight: 700;
-    color: $color-ink;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  &__count {
-    font-size: 0.8125rem;
+  &__tab {
+    padding: 10px 18px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    font-family: $font-sans;
+    font-size: 13.5px;
     font-weight: 500;
     color: $color-ink-subtle;
-    background: $color-surface-muted;
-    padding: 0.1rem 0.5rem;
-    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color $transition-base, border-color $transition-base;
+
+    &:hover { color: $color-ink; }
+
+    &--active {
+      color: $color-ink-dark;
+      font-weight: 700;
+      border-bottom-color: $color-accent;
+    }
   }
-
-  &__table-area {
-    margin-top: 0.25rem;
-  }
-
-  // ─── Cards grid ───────────────────────────────────────────────
-  &__cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1rem;
-  }
-
-  &__card-skeleton {
-    height: 178px;
-    border-radius: $border-radius-card;
-    background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.4s infinite;
-  }
-
-  &__cards-empty {
-    grid-column: 1 / -1;
-    text-align: center;
-    color: $color-ink-muted;
-    padding: 3rem 1rem;
-    font-size: 0.875rem;
-  }
-}
-
-@keyframes shimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-// ─── View switch transition ────────────────────────────────────────
-.view-switch-enter-active,
-.view-switch-leave-active {
-  transition: opacity 120ms ease, transform 120ms ease;
-}
-.view-switch-enter-from { opacity: 0; transform: translateY(6px); }
-.view-switch-leave-to   { opacity: 0; transform: translateY(-4px); }
-
-// ─── Responsive ───────────────────────────────────────────────────
-@media (max-width: 640px) {
-  .student-page__title { font-size: 1.375rem; }
-  .student-page__content-card { padding: 1rem; }
 }
 </style>

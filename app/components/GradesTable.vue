@@ -1,210 +1,179 @@
 <script setup lang="ts">
-import type { Subject } from '~/types/grades'
-import { GRADE_TYPE_LABELS, computeAverage } from '~/data/mockGrades'
+import type { MockSubject } from '~/data/mockGrades'
 
 interface Props {
-  subjects: Subject[]
+  subjects: MockSubject[]
   loading?: boolean
+  perPage?: number
 }
 
-const props = withDefaults(defineProps<Props>(), { loading: false })
-
-type SortKey = 'name' | 'semester' | 'ects' | 'average' | 'finalGrade'
-type SortDir = 'asc' | 'desc'
-
-const sortKey = ref<SortKey>('semester')
-const sortDir = ref<SortDir>('asc')
-const expandedSubjectId = ref<string | null>(null)
-
-function setSort(key: SortKey) {
-  if (sortKey.value === key) {
-    sortDir.value = sortDir.value === 'asc' ? 'desc' : 'asc'
-  } else {
-    sortKey.value = key
-    sortDir.value = 'asc'
-  }
-}
-
-function toggleExpand(id: string) {
-  expandedSubjectId.value = expandedSubjectId.value === id ? null : id
-}
-
-const sorted = computed(() => {
-  return [...props.subjects].sort((a, b) => {
-    let va: number | string = 0
-    let vb: number | string = 0
-
-    switch (sortKey.value) {
-      case 'name':       va = a.name;       vb = b.name;       break
-      case 'semester':   va = a.semester;   vb = b.semester;   break
-      case 'ects':       va = a.ects;       vb = b.ects;       break
-      case 'average':    va = computeAverage(a.grades); vb = computeAverage(b.grades); break
-      case 'finalGrade': va = a.finalGrade ?? 0; vb = b.finalGrade ?? 0; break
-    }
-
-    const cmp = typeof va === 'string' ? va.localeCompare(vb as string) : (va as number) - (vb as number)
-    return sortDir.value === 'asc' ? cmp : -cmp
-  })
+const props = withDefaults(defineProps<Props>(), {
+  loading: false,
+  perPage: 10,
 })
 
-function formatDate(dateStr: string): string {
-  return new Intl.DateTimeFormat('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(dateStr))
+const expanded = ref<string | null>(null)
+const page = ref(1)
+
+watch(() => props.subjects, () => { page.value = 1 })
+
+const totalPages = computed(() => Math.max(1, Math.ceil(props.subjects.length / props.perPage)))
+
+const paged = computed(() =>
+  props.subjects.slice((page.value - 1) * props.perPage, page.value * props.perPage)
+)
+
+const pageRange = computed(() => Array.from({ length: totalPages.value }, (_, i) => i + 1))
+
+function toggle(id: string) {
+  expanded.value = expanded.value === id ? null : id
 }
 </script>
 
 <template>
-  <div class="grades-table-wrapper">
-    <!-- Loading skeleton -->
+  <div class="grades-table-wrap">
+    <!-- Skeleton -->
     <template v-if="loading">
-      <div class="grades-table-skeleton">
-        <div v-for="i in 5" :key="i" class="grades-table-skeleton__row" />
+      <div class="grades-skeleton">
+        <div class="grades-skeleton__header" />
+        <div v-for="i in perPage" :key="i" class="grades-skeleton__row" />
       </div>
     </template>
 
-    <!-- Empty state -->
-    <div v-else-if="!subjects.length" class="grades-table-empty">
-      <SidebarIcon name="filter" class="grades-table-empty__icon" />
-      <p class="grades-table-empty__title">Brak wyników</p>
-      <p class="grades-table-empty__subtitle">Zmień kryteria filtrowania</p>
-    </div>
+    <template v-else>
+      <!-- Empty -->
+      <div v-if="!subjects.length" class="grades-empty">
+        Brak przedmiotów spełniających kryteria wyszukiwania.
+      </div>
 
-    <!-- Table -->
-    <div v-else class="grades-table-scroll" role="region" aria-label="Tabela ocen">
-      <table class="grades-table">
-        <thead>
-          <tr>
-            <th class="grades-table__th grades-table__th--expand" aria-label="Rozwiń" />
-            <th
-              class="grades-table__th grades-table__th--sortable"
-              :class="{ 'grades-table__th--sorted': sortKey === 'name' }"
-              @click="setSort('name')"
-            >
-              Przedmiot
-              <SidebarIcon :name="sortKey === 'name' && sortDir === 'desc' ? 'chevron-up' : 'chevron-down'" class="grades-table__sort-icon" />
-            </th>
-            <th
-              class="grades-table__th grades-table__th--sortable grades-table__th--center"
-              :class="{ 'grades-table__th--sorted': sortKey === 'semester' }"
-              @click="setSort('semester')"
-            >
-              Sem.
-              <SidebarIcon :name="sortKey === 'semester' && sortDir === 'desc' ? 'chevron-up' : 'chevron-down'" class="grades-table__sort-icon" />
-            </th>
-            <th
-              class="grades-table__th grades-table__th--sortable grades-table__th--center"
-              :class="{ 'grades-table__th--sorted': sortKey === 'ects' }"
-              @click="setSort('ects')"
-            >
-              ECTS
-              <SidebarIcon :name="sortKey === 'ects' && sortDir === 'desc' ? 'chevron-up' : 'chevron-down'" class="grades-table__sort-icon" />
-            </th>
-            <th
-              class="grades-table__th grades-table__th--sortable grades-table__th--center"
-              :class="{ 'grades-table__th--sorted': sortKey === 'average' }"
-              @click="setSort('average')"
-            >
-              Średnia
-              <SidebarIcon :name="sortKey === 'average' && sortDir === 'desc' ? 'chevron-up' : 'chevron-down'" class="grades-table__sort-icon" />
-            </th>
-            <th
-              class="grades-table__th grades-table__th--sortable grades-table__th--center"
-              :class="{ 'grades-table__th--sorted': sortKey === 'finalGrade' }"
-              @click="setSort('finalGrade')"
-            >
-              Ocena końcowa
-              <SidebarIcon :name="sortKey === 'finalGrade' && sortDir === 'desc' ? 'chevron-up' : 'chevron-down'" class="grades-table__sort-icon" />
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <template v-for="subject in sorted" :key="subject.id">
-            <!-- Main row -->
-            <tr
-              class="grades-table__row"
-              :class="{ 'grades-table__row--expanded': expandedSubjectId === subject.id }"
-              @click="toggleExpand(subject.id)"
-            >
-              <td class="grades-table__td grades-table__td--expand">
-                <button class="grades-table__expand-btn" :aria-label="expandedSubjectId === subject.id ? 'Zwiń' : 'Rozwiń'">
-                  <SidebarIcon :name="expandedSubjectId === subject.id ? 'chevron-up' : 'chevron-down'" />
-                </button>
-              </td>
-              <td class="grades-table__td">
-                <div class="grades-table__subject-name">{{ subject.name }}</div>
-                <div class="grades-table__subject-meta">{{ subject.code }} · {{ subject.teacherName }}</div>
-              </td>
-              <td class="grades-table__td grades-table__td--center">
-                <span class="grades-table__semester-badge">{{ subject.semester }}</span>
-              </td>
-              <td class="grades-table__td grades-table__td--center">
-                <span class="grades-table__ects">{{ subject.ects }}</span>
-              </td>
-              <td class="grades-table__td grades-table__td--center">
-                <span class="grades-table__average">
-                  {{ subject.grades.length ? computeAverage(subject.grades).toFixed(2) : '—' }}
-                </span>
-              </td>
-              <td class="grades-table__td grades-table__td--center">
-                <GradesBadge :value="subject.finalGrade" size="md" />
-              </td>
+      <!-- Table -->
+      <div v-else class="grades-table-scroll">
+        <table class="grades-table" role="table">
+          <thead>
+            <tr class="grades-table__head-row">
+              <th class="grades-table__th grades-table__th--toggle" />
+              <th class="grades-table__th">Nazwa przedmiotu ▲</th>
+              <th class="grades-table__th grades-table__th--num">Liczba godzin</th>
+              <th class="grades-table__th grades-table__th--num">Punkty ECTS</th>
+              <th class="grades-table__th grades-table__th--num">Ocena</th>
             </tr>
-
-            <!-- Expanded detail row -->
-            <Transition name="expand">
-              <tr v-if="expandedSubjectId === subject.id" class="grades-table__detail-row">
-                <td colspan="6" class="grades-table__detail-cell">
-                  <div class="grades-table__detail">
-                    <p v-if="!subject.grades.length" class="grades-table__detail-empty">
-                      Brak cząstkowych ocen
-                    </p>
-                    <table v-else class="grades-table__detail-table">
-                      <thead>
-                        <tr>
-                          <th>Opis</th>
-                          <th>Typ</th>
-                          <th>Data</th>
-                          <th>Ocena</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="grade in subject.grades" :key="grade.id">
-                          <td>{{ grade.description }}</td>
-                          <td>
-                            <span class="grades-table__type-pill">{{ GRADE_TYPE_LABELS[grade.type] }}</span>
-                          </td>
-                          <td class="grades-table__date">{{ formatDate(grade.date) }}</td>
-                          <td><GradesBadge :value="grade.value" size="sm" /></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+          </thead>
+          <tbody>
+            <template v-for="s in paged" :key="s.id">
+              <!-- Main row -->
+              <tr
+                class="grades-table__row"
+                :class="{ 'grades-table__row--open': expanded === s.id }"
+                @click="toggle(s.id)"
+              >
+                <td class="grades-table__td grades-table__td--toggle">
+                  <button
+                    class="grades-table__toggle-btn"
+                    :aria-label="expanded === s.id ? 'Zwiń' : 'Rozwiń'"
+                    @click.stop="toggle(s.id)"
+                  >
+                    {{ expanded === s.id ? '−' : '+' }}
+                  </button>
+                </td>
+                <td class="grades-table__td">
+                  <span class="grades-table__name">{{ s.name }}</span>
+                </td>
+                <td class="grades-table__td grades-table__td--num">{{ s.hours }}</td>
+                <td class="grades-table__td grades-table__td--num grades-table__td--ects">{{ s.ects }}</td>
+                <td class="grades-table__td grades-table__td--num">
+                  <GradesBadge :grade="s.finalGrade" />
                 </td>
               </tr>
-            </Transition>
-          </template>
-        </tbody>
-      </table>
-    </div>
+
+              <!-- Detail row -->
+              <Transition name="expand">
+                <tr v-if="expanded === s.id" class="grades-table__detail-row">
+                  <td colspan="5" class="grades-table__detail-cell">
+                    <div class="grades-table__detail">
+                      <div class="grades-table__detail-item">
+                        <div class="grades-table__detail-label">Wykładowca</div>
+                        <div class="grades-table__detail-value">{{ s.teacher }}</div>
+                      </div>
+                      <div class="grades-table__detail-item">
+                        <div class="grades-table__detail-label">Data wpisu</div>
+                        <div class="grades-table__detail-value">{{ s.date || '—' }}</div>
+                      </div>
+                      <div class="grades-table__detail-item">
+                        <div class="grades-table__detail-label">Typ oceny</div>
+                        <div class="grades-table__detail-value">Ocena końcowa</div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </Transition>
+            </template>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Footer -->
+      <div v-if="subjects.length" class="grades-table-footer">
+        <span class="grades-table-footer__info">
+          Wyświetlanie:
+          {{ (page - 1) * perPage + 1 }}–{{ Math.min(page * perPage, subjects.length) }}
+          / {{ subjects.length }}
+        </span>
+
+        <div class="grades-table-footer__pages" role="navigation" aria-label="Strony">
+          <button
+            class="grades-table-footer__page-btn"
+            :disabled="page === 1"
+            @click="page--"
+          >‹</button>
+
+          <button
+            v-for="p in pageRange"
+            :key="p"
+            class="grades-table-footer__page-btn"
+            :class="{ 'grades-table-footer__page-btn--active': page === p }"
+            @click="page = p"
+          >{{ p }}</button>
+
+          <button
+            class="grades-table-footer__page-btn"
+            :disabled="page === totalPages"
+            @click="page++"
+          >›</button>
+        </div>
+
+        <div class="grades-table-footer__per-page">
+          Pokaż na stronie:
+          <select class="grades-table-footer__select" disabled>
+            <option>{{ perPage }}</option>
+          </select>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
 <style scoped lang="scss">
 @use '~/assets/scss/variables' as *;
 
-.grades-table-wrapper {
-  width: 100%;
+.grades-table-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 // ─── Skeleton ──────────────────────────────────────────────────────
-.grades-table-skeleton {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.grades-skeleton {
+  &__header {
+    height: 44px;
+    background: $color-surface-muted;
+    border-radius: 4px 4px 0 0;
+    margin-bottom: 1px;
+  }
 
   &__row {
-    height: 56px;
-    border-radius: 10px;
-    background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+    height: 52px;
+    margin-bottom: 1px;
+    background: linear-gradient(90deg, #f1f3f9 25%, #e8eaf0 50%, #f1f3f9 75%);
     background-size: 200% 100%;
     animation: shimmer 1.4s infinite;
   }
@@ -215,208 +184,182 @@ function formatDate(dateStr: string): string {
   100% { background-position: -200% 0; }
 }
 
-// ─── Empty state ───────────────────────────────────────────────────
-.grades-table-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 1rem;
-  gap: 0.5rem;
-
-  &__icon {
-    width: 40px;
-    height: 40px;
-    color: $color-ink-subtle;
-    margin-bottom: 0.5rem;
-  }
-
-  &__title    { font-size: 1rem; font-weight: 600; color: $color-ink; margin: 0; }
-  &__subtitle { font-size: 0.875rem; color: $color-ink-muted; margin: 0; }
+// ─── Empty ─────────────────────────────────────────────────────────
+.grades-empty {
+  padding: 40px;
+  text-align: center;
+  color: $color-ink-subtle;
+  font-size: 14px;
 }
 
 // ─── Scroll wrapper ────────────────────────────────────────────────
 .grades-table-scroll {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  border-radius: 12px;
 }
 
 // ─── Table ─────────────────────────────────────────────────────────
 .grades-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.875rem;
+  font-size: 13.5px;
 
-  &__th {
-    padding: 0.625rem 1rem;
-    text-align: left;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: $color-ink-muted;
-    white-space: nowrap;
-    border-bottom: 1px solid #f1f5f9;
-    user-select: none;
-
-    &--sortable {
-      cursor: pointer;
-      display: table-cell;
-
-      &:hover { color: $color-ink; }
-    }
-
-    &--sorted { color: $color-brand-600; }
-    &--center { text-align: center; }
-    &--expand { width: 40px; padding: 0 0.5rem; }
+  &__head-row {
+    border-bottom: 1px solid $color-border;
   }
 
-  &__sort-icon {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    vertical-align: middle;
-    margin-left: 4px;
-    opacity: 0.6;
+  &__th {
+    padding: 13px 18px;
+    text-align: left;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: $color-ink-subtle;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    background: $color-surface-card;
+
+    &--toggle { width: 50px; padding: 13px 8px 13px 18px; }
+    &--num    { text-align: left; }
   }
 
   &__row {
     cursor: pointer;
     transition: background $transition-base;
-    border-bottom: 1px solid #f8fafc;
+    border-bottom: 1px solid $color-border-light;
 
-    &:hover { background: #f8fafc; }
-
-    &--expanded {
-      background: #f5f3ff;
-
-      &:hover { background: #f5f3ff; }
-    }
+    &:hover     { background: $color-surface-hover; }
+    &--open     { background: $color-surface-hover; }
+    &:last-child { border-bottom: none; }
   }
 
   &__td {
-    padding: 0.875rem 1rem;
+    padding: 13px 18px;
+    color: $color-ink;
     vertical-align: middle;
 
-    &--center { text-align: center; }
-    &--expand { padding: 0 0.5rem; }
+    &--toggle { padding: 13px 8px 13px 18px; }
+    &--num    { color: $color-ink-muted; }
+    &--ects   { font-weight: 700; color: $color-ink-dark; }
   }
 
-  &__expand-btn {
+  &__toggle-btn {
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid $color-border-input;
+    background: $color-surface-card;
+    border-radius: 5px;
+    cursor: pointer;
+    color: $color-ink-muted;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
-    border: none;
-    background: transparent;
-    color: $color-ink-muted;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background $transition-base;
+    font-family: $font-sans;
+    transition: background $transition-base, border-color $transition-base;
 
-    svg { width: 14px; height: 14px; }
-
-    &:hover { background: #e2e8f0; }
+    &:hover { background: $color-surface-muted; border-color: $color-ink-subtle; }
   }
 
-  &__subject-name {
-    font-weight: 600;
-    color: $color-ink;
-    margin-bottom: 2px;
-  }
-
-  &__subject-meta {
-    font-size: 0.75rem;
-    color: $color-ink-subtle;
-  }
-
-  &__semester-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    background: #ede9fe;
-    color: $color-brand-600;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
-
-  &__ects {
-    font-weight: 600;
-    color: $color-ink-muted;
-  }
-
-  &__average {
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
+  &__name {
+    font-weight: 500;
     color: $color-ink;
   }
 
-  // ─── Detail row ───────────────────────────────────────────────
-  &__detail-row { background: #faf8ff; }
+  // ─── Detail ────────────────────────────────────────────────────
+  &__detail-row { background: $color-surface-hover; }
 
-  &__detail-cell {
-    padding: 0 1rem 1.25rem 1rem;
-  }
+  &__detail-cell { padding: 0 18px 16px 56px; }
 
   &__detail {
-    padding: 0.75rem;
-    background: #fff;
-    border-radius: 10px;
-    border: 1px solid #ede9fe;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    font-size: 13px;
+    padding: 16px;
+    background: $color-surface-muted;
+    border-top: 1px solid $color-border-light;
+    border-radius: 0 0 4px 4px;
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
   }
 
-  &__detail-empty {
+  &__detail-label {
+    font-size: 11.5px;
+    font-weight: 700;
     color: $color-ink-subtle;
-    font-size: 0.875rem;
-    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
   }
 
-  &__detail-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.8125rem;
+  &__detail-value {
+    font-weight: 600;
+    color: $color-ink;
+  }
+}
 
-    th {
-      padding: 0.375rem 0.75rem;
-      text-align: left;
-      font-size: 0.6875rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: $color-ink-subtle;
-      border-bottom: 1px solid #f1f5f9;
+// ─── Footer ────────────────────────────────────────────────────────
+.grades-table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 4px;
+  font-size: 13px;
+  color: $color-ink-faint;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  &__info { white-space: nowrap; }
+
+  &__pages {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__page-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    border: 1px solid $color-border-input;
+    background: $color-surface-card;
+    color: $color-ink;
+    cursor: pointer;
+    font-family: $font-sans;
+    font-size: 13px;
+    transition: background $transition-base;
+
+    &:hover:not(:disabled) { background: $color-surface-muted; }
+    &:disabled { opacity: 0.35; cursor: default; }
+
+    &--active {
+      background: $color-ink-dark;
+      color: #fff;
+      border-color: $color-ink-dark;
     }
-
-    td {
-      padding: 0.5rem 0.75rem;
-      color: $color-ink;
-      border-bottom: 1px solid #f8fafc;
-
-      &:last-child { border-bottom: none; }
-    }
-
-    tr:last-child td { border-bottom: none; }
   }
 
-  &__type-pill {
-    display: inline-block;
-    padding: 0.15rem 0.5rem;
-    background: #f1f5f9;
-    color: $color-ink-muted;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 500;
-  }
-
-  &__date {
-    color: $color-ink-muted;
-    font-variant-numeric: tabular-nums;
+  &__per-page {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     white-space: nowrap;
+  }
+
+  &__select {
+    padding: 5px 10px;
+    border: 1.5px solid $color-border-input;
+    border-radius: 8px;
+    font-family: $font-sans;
+    font-size: 13px;
+    background: $color-surface-card;
+    color: $color-ink;
   }
 }
 

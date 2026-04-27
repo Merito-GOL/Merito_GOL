@@ -1,28 +1,46 @@
-// Brand
-$color-brand-600: #4f46e5;
-$color-brand-700: #4338ca;
+// ─── Ink ───────────────────────────────────────────────────────────
+$color-ink:          #1a2238;
+$color-ink-dark:     #0b1733;
+$color-ink-muted:    #475069;
+$color-ink-subtle:   #8089a0;
+$color-ink-faint:    #5a637d;
 
-// Surfaces
+// ─── Accent ────────────────────────────────────────────────────────
+$color-accent:       #1f6feb;
+
+// ─── Surfaces ──────────────────────────────────────────────────────
 $color-surface:      #f6f7fb;
 $color-surface-card: #ffffff;
+$color-surface-hover:#f9fafd;
 $color-surface-muted:#f1f3f9;
 
-// Ink
-$color-ink:        #0b1733;
-$color-ink-muted:  #64748b;
-$color-ink-subtle: #94a3b8;
+// ─── Borders ───────────────────────────────────────────────────────
+$color-border:       #e9ecf3;
+$color-border-light: #f0f2f7;
+$color-border-input: #dde2ec;
 
-// Grade colors
-$color-grade-excellent: #16a34a;
-$color-grade-good:      #2563eb;
-$color-grade-average:   #d97706;
-$color-grade-poor:      #dc2626;
-$color-grade-fail:      #6b7280;
+// ─── Grade tones ───────────────────────────────────────────────────
+$grade-high-bg:     #d8f0d8;
+$grade-high-fg:     #1d7a36;
+$grade-high-border: #bfe0bf;
 
-// Layout
-$sidebar-width: 260px;
-$topbar-height: 64px;
-$border-radius-card: 1rem;
+$grade-mid-bg:      #fff5d4;
+$grade-mid-fg:      #8a5a00;
+$grade-mid-border:  #f0dfa0;
 
-// Transitions
+$grade-low-bg:      #ffe5e0;
+$grade-low-fg:      #c8341d;
+$grade-low-border:  #f7c2b7;
+
+// ─── Layout ────────────────────────────────────────────────────────
+$topbar-height:      64px;
+$content-max-width:  1100px;
+$border-radius-card: 12px;
+$border-radius-btn:  10px;
+$border-radius-chip: 3px;
+
+// ─── Typography ────────────────────────────────────────────────────
+$font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+// ─── Transitions ───────────────────────────────────────────────────
 $transition-base: 150ms ease;
