@@ -1,23 +1,112 @@
 <script setup lang="ts">
-import type { GradeFilterState, StudentSubject } from '~/types/grades'
-import { mockSubjects, mockSemesters, mockStudent } from '~/data/mockGrades'
+import type { GradeFilterState, Semester, StudentSubject } from '~/types/grades'
+import type { StudentUser, User } from '~/types/entities'
 
 definePageMeta({ layout: 'student' })
 
+const DEFAULT_STUDENT_ID = 1
+const MOCK_USER_ID_STORAGE_KEY = 'meritogol.mockUserId'
+const CURRENT_USER_ID_STORAGE_KEY = 'meritogol.currentUserId'
+const CURRENT_USER_STORAGE_KEY = 'meritogol.currentUser'
+
+// Temporary user switching until registration/login is integrated:
+// localStorage.setItem('meritogol.mockUserId', '1'); location.reload()
+// localStorage.setItem('meritogol.mockUserId', '4'); location.reload()
+const gradeStore = useGradeStore()
 const filters = ref<GradeFilterState>({ search: '' })
-const loading = ref(false)
+const loading = ref(true)
 const subjects = ref<StudentSubject[]>([])
+const currentStudent = ref<StudentUser | null>(null)
 const page = ref(1)
 const perPage = 10
 
+function formatGrade(value: number) {
+  return value.toFixed(value % 1 === 0 ? 1 : 1).replace('.', ',')
+}
+
+function fullName(user?: User) {
+  if (!user) return '—'
+  return `${'title' in user ? `${user.title} ` : ''}${user.firstName} ${user.lastName}`
+}
+
+function toViewSemester(value?: number): Semester {
+  return value && value >= 1 && value <= 8 ? value as Semester : 1
+}
+
+function readTemporaryStudentId() {
+  if (!import.meta.client) return DEFAULT_STUDENT_ID
+
+  const explicitId = localStorage.getItem(MOCK_USER_ID_STORAGE_KEY)
+    ?? localStorage.getItem(CURRENT_USER_ID_STORAGE_KEY)
+
+  if (explicitId && Number.isFinite(Number(explicitId))) {
+    return Number(explicitId)
+  }
+
+  const storedUser = localStorage.getItem(CURRENT_USER_STORAGE_KEY)
+
+  if (!storedUser) return DEFAULT_STUDENT_ID
+
+  try {
+    const parsed = JSON.parse(storedUser) as Partial<User>
+
+    if (parsed.role === 'student' && Number.isFinite(Number(parsed.id))) {
+      return Number(parsed.id)
+    }
+  } catch {
+    localStorage.removeItem(CURRENT_USER_STORAGE_KEY)
+  }
+
+  return DEFAULT_STUDENT_ID
+}
+
+function buildStudentSubjects(studentId: number) {
+  const currentSemesterNumber = getCurrentSemesterNumber(studentId)
+
+  return gradeStore.getStudentGrades(studentId)
+    .map((grade): StudentSubject | null => {
+      const course = gradeStore.getCourse(grade.courseId)
+      if (!course) return null
+
+      const teacher = gradeStore.getUser(grade.createdBy)
+      const group = currentStudent.value ? gradeStore.getGroup(currentStudent.value.groupId) : null
+      const semester = gradeStore.getSemester(course.semesterId)
+
+      return {
+        id: String(grade.id),
+        name: course.name,
+        hours: course.hours,
+        ects: course.ects,
+        finalGrade: formatGrade(grade.value),
+        date: grade.date,
+        teacher: fullName(teacher),
+        group: group?.code ?? '—',
+        semester: toViewSemester(semester?.number),
+      }
+    })
+    .filter((subject): subject is StudentSubject => Boolean(subject))
+    .filter((subject) => !currentSemesterNumber || subject.semester === currentSemesterNumber)
+}
+
+function getCurrentSemesterNumber(studentId: number) {
+  return gradeStore.summaries.value
+    .filter((summary) => summary.studentId === studentId)
+    .map((summary) => gradeStore.getSemester(summary.semesterId)?.number)
+    .filter((number): number is number => typeof number === 'number')
+    .sort((a, b) => b - a)[0]
+}
+
 onMounted(async () => {
   loading.value = true
-  await new Promise(r => setTimeout(r, 500))
-  subjects.value = mockSubjects.filter(s => s.semester === mockStudent.currentSemester)
+  await gradeStore.loadAll()
+
+  const studentId = readTemporaryStudentId()
+  const user = gradeStore.getUser(studentId)
+
+  currentStudent.value = user?.role === 'student' ? user : null
+  subjects.value = currentStudent.value ? buildStudentSubjects(currentStudent.value.id) : []
   loading.value = false
 })
-
-const currentSemester = computed(() => mockSemesters[0])
 
 const filteredSubjects = computed(() => {
   if (!filters.value.search) return subjects.value
@@ -67,7 +156,7 @@ const totalPages = computed(() => Math.max(1, Math.ceil(filteredSubjects.value.l
 
     <footer class="student-page__footer">
       MeritoGOŁ • Panel studenta • Zalogowany jako
-      <strong>{{ mockStudent.firstName }} {{ mockStudent.lastName }}</strong>
+      <strong>{{ currentStudent ? `${currentStudent.firstName} ${currentStudent.lastName}` : 'Jan Kowalski' }}</strong>
     </footer>
   </div>
 </template>
