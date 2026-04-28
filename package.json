@@ -6,6 +6,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "mock-api": "json-server --watch db.json --port 3001",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
@@ -15,6 +16,7 @@
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
+    "json-server": "^1.0.0-beta.3",
     "sass-embedded": "^1.97.3"
   }
 }
