@@ -5,6 +5,12 @@ export default defineNuxtConfig({
 
   ssr: true,
 
+  app: {
+    head: {
+      title: 'MeritoGOŁ — Twoje studia',
+    },
+  },
+
   modules: [
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',

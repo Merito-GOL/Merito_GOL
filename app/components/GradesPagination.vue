@@ -9,12 +9,29 @@ interface Props {
 const props = defineProps<Props>()
 const emit = defineEmits<{
   'update:page': [value: number]
+  'update:perPage': [value: number]
 }>()
 
 const pageRange = computed(() => Array.from({ length: props.totalPages }, (_, i) => i + 1))
 
 const from = computed(() => (props.page - 1) * props.perPage + 1)
 const to = computed(() => Math.min(props.page * props.perPage, props.total))
+
+const perPageOptions = computed(() => {
+  const base = [5, 10, 20, 50]
+  const set = new Set<number>(base)
+  set.add(props.perPage)
+  return Array.from(set).sort((a, b) => a - b)
+})
+
+const perPageModel = computed({
+  get: () => String(props.perPage),
+  set: (value: string) => {
+    const next = Number(value)
+    if (!Number.isFinite(next) || next <= 0) return
+    emit('update:perPage', next)
+  },
+})
 </script>
 
 <template>
@@ -47,8 +64,8 @@ const to = computed(() => Math.min(props.page * props.perPage, props.total))
 
     <div class="pagination__per-page">
       Pokaż na stronie:
-      <select class="pagination__select" disabled>
-        <option>{{ perPage }}</option>
+      <select v-model="perPageModel" class="pagination__select">
+        <option v-for="n in perPageOptions" :key="n" :value="String(n)">{{ n }}</option>
       </select>
     </div>
   </div>
@@ -94,6 +111,10 @@ const to = computed(() => Math.min(props.page * props.perPage, props.total))
       background: $color-ink-dark;
       color: #fff;
       border-color: $color-ink-dark;
+    }
+
+    &--active:hover:not(:disabled) {
+      background: $color-ink-dark;
     }
   }
 

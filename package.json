@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "concurrently \"nuxt dev\" \"npm run mock-api\"",
     "generate": "nuxt generate",
-    "mock-api": "json-server --watch db.json --port 3001",
+    "mock-api": "json-server db.json --port 3001",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
@@ -19,6 +19,7 @@
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "json-server": "^1.0.0-beta.3",
     "sass-embedded": "^1.97.3",
     "tailwindcss": "^3.4.0"

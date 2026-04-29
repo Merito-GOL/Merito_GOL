@@ -11,14 +11,17 @@ const props = defineProps<Props>()
 defineEmits<{ back: [] }>()
 
 const search = ref('')
-const grades = ref<Record<string, GradeOption>>({})
+const grades = ref<Record<string, GradeOption>>(
+  Object.fromEntries(props.roster.map((s, i) => [
+    s.id,
+    (i < 4 ? (['5,0', '4,5', '4,0', '3,5'] as GradeOption[])[i] : '—') as GradeOption,
+  ])) as Record<string, GradeOption>
+)
 const savedAt = ref<Date | null>(null)
 
-onMounted(() => {
-  props.roster.forEach((s, i) => {
-    grades.value[s.id] = i < 4 ? (['5,0', '4,5', '4,0', '3,5'] as GradeOption[])[i] : '—'
-  })
-})
+function gradeOf(id: string): GradeOption {
+  return grades.value[id] ?? '—'
+}
 
 const filtered = computed(() => {
   const q = search.value.toLowerCase()
@@ -114,7 +117,7 @@ function save() {
         v-for="(s, i) in filtered"
         :key="s.id"
         class="gradebook__row"
-        :class="{ 'gradebook__row--pending': grades[s.id] === '—' }"
+        :class="{ 'gradebook__row--pending': gradeOf(s.id) === '—' }"
       >
         <span class="gradebook__album">{{ s.id }}</span>
         <span class="gradebook__student-name">{{ s.name }}</span>
@@ -124,7 +127,7 @@ function save() {
             :key="opt"
             class="gradebook__grade-btn"
             :class="{
-              'gradebook__grade-btn--active': grades[s.id] === opt,
+              'gradebook__grade-btn--active': gradeOf(s.id) === opt,
               'gradebook__grade-btn--empty': opt === '—',
             }"
             type="button"

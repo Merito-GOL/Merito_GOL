@@ -1,7 +1,28 @@
 <script setup lang="ts">
 import type { GradeFilterState } from '~/types/grades'
 
+const props = withDefaults(defineProps<{ maxSemester?: number | null }>(), {
+  maxSemester: null,
+})
+
 const model = defineModel<GradeFilterState>({ required: true })
+
+const showFilters = ref(false)
+
+const semesterOptions = computed(() => {
+  const max = typeof props.maxSemester === 'number' && Number.isFinite(props.maxSemester)
+    ? Math.max(1, Math.min(8, props.maxSemester))
+    : 8
+
+  return Array.from({ length: max }, (_, i) => i + 1)
+})
+
+const semesterValue = computed({
+  get: () => (model.value.semester ? String(model.value.semester) : 'all'),
+  set: (value: string) => {
+    model.value.semester = value === 'all' ? null : Number(value) as GradeFilterState['semester']
+  },
+})
 </script>
 
 <template>
@@ -20,15 +41,11 @@ const model = defineModel<GradeFilterState>({ required: true })
         />
       </div>
 
-      <button class="grades-filter__btn grades-filter__btn--search" type="button">
-        Szukaj
-      </button>
-
-      <button class="grades-filter__btn grades-filter__btn--filters" type="button" disabled>
+      <button class="grades-filter__btn grades-filter__btn--filters" type="button" @click="showFilters = !showFilters">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
         </svg>
-        Pokaż filtry
+        {{ showFilters ? 'Ukryj filtry' : 'Pokaż filtry' }}
       </button>
 
       <Transition name="fade">
@@ -42,6 +59,27 @@ const model = defineModel<GradeFilterState>({ required: true })
         </button>
       </Transition>
     </div>
+
+    <Transition name="expand">
+      <div v-if="showFilters" class="grades-filter__panel" role="group" aria-label="Filtry">
+        <label class="grades-filter__field">
+          <span class="grades-filter__label">Semestr</span>
+          <select v-model="semesterValue" class="grades-filter__select">
+            <option value="all">Wszystkie</option>
+            <option v-for="n in semesterOptions" :key="n" :value="String(n)">{{ n }}</option>
+          </select>
+        </label>
+
+        <label class="grades-filter__field">
+          <span class="grades-filter__label">Ocena</span>
+          <select v-model="model.gradeStatus" class="grades-filter__select">
+            <option value="all">Wszystkie</option>
+            <option value="graded">Tylko ocenione</option>
+            <option value="missing">Bez oceny</option>
+          </select>
+        </label>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -109,13 +147,6 @@ const model = defineModel<GradeFilterState>({ required: true })
     &:active:not(:disabled) { transform: translateY(1px); }
     &:disabled { opacity: 0.6; cursor: default; }
 
-    &--search {
-      background: #dbe4f3;
-      color: $color-ink;
-
-      &:hover { background: darken(#dbe4f3, 5%); }
-    }
-
     &--filters {
       background: $color-surface-card;
       color: $color-ink;
@@ -136,8 +167,52 @@ const model = defineModel<GradeFilterState>({ required: true })
       &:hover { color: $color-ink; background: $color-surface-muted; }
     }
   }
+
+  &__panel {
+    margin-top: 10px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+
+  &__field {
+    display: grid;
+    gap: 6px;
+    min-width: 180px;
+  }
+
+  &__label {
+    font-size: 11px;
+    font-weight: 700;
+    color: $color-ink-subtle;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  &__select {
+    height: 40px;
+    padding: 0 12px;
+    border: 1.5px solid $color-border-input;
+    border-radius: $border-radius-btn;
+    background: $color-surface-card;
+    color: $color-ink;
+    font-family: $font-sans;
+    font-size: 14px;
+    outline: none;
+    transition: border-color $transition-base, box-shadow $transition-base;
+
+    &:focus {
+      border-color: $color-ink-dark;
+      box-shadow: 0 0 0 4px rgba(11, 23, 51, 0.08);
+    }
+  }
 }
 
 .fade-enter-active, .fade-leave-active { transition: opacity $transition-base; }
 .fade-enter-from, .fade-leave-to { opacity: 0; }
+
+.expand-enter-active, .expand-leave-active { transition: max-height $transition-base, opacity $transition-base; overflow: hidden; }
+.expand-enter-from, .expand-leave-to { max-height: 0; opacity: 0; }
+.expand-enter-to, .expand-leave-from { max-height: 120px; opacity: 1; }
 </style>
