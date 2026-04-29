@@ -151,7 +151,6 @@ const handleRegister = async () => {
         </div>
 
         <!-- Imię i nazwisko -->
-        <div class="register__row">
           <div class="register__field">
             <label for="firstName">Imię</label>
             <input
@@ -175,7 +174,6 @@ const handleRegister = async () => {
             />
             <span v-if="errors.lastName" class="register__error">{{ errors.lastName }}</span>
           </div>
-        </div>
 
         <!-- Email -->
         <div class="register__field">

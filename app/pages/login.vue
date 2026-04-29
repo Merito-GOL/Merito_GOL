@@ -56,6 +56,11 @@ const handleLogin = async () => {
         <button type="submit" class="login__button" :disabled="auth.loading.value">
           {{ auth.loading.value ? 'Logowanie...' : 'Zaloguj się' }}
         </button>
+
+        <p class="login__register">
+          Nie masz konta?
+          <NuxtLink to="/register">Zarejestruj się</NuxtLink>
+        </p>
       </form>
     </div>
   </section>
@@ -118,6 +123,24 @@ const handleLogin = async () => {
     font-size: 14px;
     text-align: center;
     margin-top: 8px;
+  }
+
+  &__register {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #6b7280;
+
+    a {
+      color: #0b1733;
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 4px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
 </style>
