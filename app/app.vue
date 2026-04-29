@@ -1,3 +1,9 @@
+<script setup lang="ts">
+  const auth = useAuthStore()
+
+  auth.initAuth()
+</script>
+
 <template>
   <div>
     <AppHeader />
