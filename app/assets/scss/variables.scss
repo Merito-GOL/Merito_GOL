@@ -1,0 +1,46 @@
+// ─── Ink ───────────────────────────────────────────────────────────
+$color-ink:          #1a2238;
+$color-ink-dark:     #0b1733;
+$color-ink-muted:    #475069;
+$color-ink-subtle:   #8089a0;
+$color-ink-faint:    #5a637d;
+
+// ─── Accent ────────────────────────────────────────────────────────
+$color-accent:       #1f6feb;
+
+// ─── Surfaces ──────────────────────────────────────────────────────
+$color-surface:      #f6f7fb;
+$color-surface-card: #ffffff;
+$color-surface-hover:#f9fafd;
+$color-surface-muted:#f1f3f9;
+
+// ─── Borders ───────────────────────────────────────────────────────
+$color-border:       #e9ecf3;
+$color-border-light: #e2e6ef;
+$color-border-input: #dde2ec;
+
+// ─── Grade tones ───────────────────────────────────────────────────
+$grade-high-bg:     #d8f0d8;
+$grade-high-fg:     #1d7a36;
+$grade-high-border: #bfe0bf;
+
+$grade-mid-bg:      #fff5d4;
+$grade-mid-fg:      #8a5a00;
+$grade-mid-border:  #f0dfa0;
+
+$grade-low-bg:      #ffe5e0;
+$grade-low-fg:      #c8341d;
+$grade-low-border:  #f7c2b7;
+
+// ─── Layout ────────────────────────────────────────────────────────
+$topbar-height:      64px;
+$content-max-width:  1100px;
+$border-radius-card: 12px;
+$border-radius-btn:  10px;
+$border-radius-chip: 3px;
+
+// ─── Typography ────────────────────────────────────────────────────
+$font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+// ─── Transitions ───────────────────────────────────────────────────
+$transition-base: 150ms ease;
