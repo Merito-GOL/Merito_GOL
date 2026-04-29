@@ -1,17 +1,25 @@
 export default defineNuxtRouteMiddleware((to) => {
-  // Pomijamy na serwerze - localStorage nie jest dostępny
-  if (!import.meta.client) {
+  const publicRoutes = ['/login', '/register']
+
+  // Jeśli jesteśmy na publicznej trasie, nie blokujemy
+  if (publicRoutes.includes(to.path)) {
     return
   }
 
-  const auth = useAuthStore()
+  // Na serwerze - sprawdzamy cookie
+  if (!import.meta.client) {
+    const cookies = useCookie('auth_token')
+    if (!cookies.value) {
+      return navigateTo('/login')
+    }
+    return
+  }
 
-  // Przywracamy stan z localStorage
+  // Na kliencie - używamy store
+  const auth = useAuthStore()
   auth.restore()
 
-  const publicRoutes = ['/login', '/register']
-
-  if (!auth.currentUser.value && !publicRoutes.includes(to.path)) {
+  if (!auth.currentUser.value) {
     return navigateTo('/login')
   }
 })

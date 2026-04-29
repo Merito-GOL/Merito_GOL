@@ -9,6 +9,11 @@ export default defineNuxtConfig({
     head: {
       title: 'MeritoGOŁ — Twoje studia',
     },
+    router: {
+      options: {
+        middleware: ['auth'],
+      },
+    },
   },
 
   modules: [
