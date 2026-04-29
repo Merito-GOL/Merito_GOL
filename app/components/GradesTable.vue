@@ -15,13 +15,23 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const expanded = ref<string | null>(null)
+const sortDir = ref<'asc' | 'desc'>('asc')
+
+const sortedSubjects = computed(() => {
+  const dir = sortDir.value === 'asc' ? 1 : -1
+  return [...props.subjects].sort((a, b) => dir * a.name.localeCompare(b.name, 'pl', { sensitivity: 'base' }))
+})
 
 const paged = computed(() =>
-  props.subjects.slice((props.page - 1) * props.perPage, props.page * props.perPage)
+  sortedSubjects.value.slice((props.page - 1) * props.perPage, props.page * props.perPage)
 )
 
 function toggle(id: string) {
   expanded.value = expanded.value === id ? null : id
+}
+
+function toggleSort() {
+  sortDir.value = sortDir.value === 'asc' ? 'desc' : 'asc'
 }
 </script>
 
@@ -47,7 +57,17 @@ function toggle(id: string) {
           <thead>
             <tr class="grades-table__head-row">
               <th class="grades-table__th grades-table__th--toggle" />
-              <th class="grades-table__th">Nazwa przedmiotu ▲</th>
+              <th class="grades-table__th">
+                <button
+                  class="grades-table__sort-btn"
+                  type="button"
+                  :aria-label="sortDir === 'asc' ? 'Sortuj: A do Z' : 'Sortuj: Z do A'"
+                  @click="toggleSort"
+                >
+                  <span>Nazwa przedmiotu</span>
+                  <span class="grades-table__sort-icon">{{ sortDir === 'asc' ? '▲' : '▼' }}</span>
+                </button>
+              </th>
               <th class="grades-table__th grades-table__th--num">Liczba godzin</th>
               <th class="grades-table__th grades-table__th--num">Punkty ECTS</th>
               <th class="grades-table__th grades-table__th--num">Ocena</th>
@@ -179,6 +199,19 @@ function toggle(id: string) {
 
     &--toggle { width: 50px; padding: 13px 8px 13px 18px; }
     &--num    { text-align: left; }
+  }
+
+  &__sort-btn {
+    all: unset;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__sort-icon {
+    font-size: 10px;
+    line-height: 1;
   }
 
   &__row {

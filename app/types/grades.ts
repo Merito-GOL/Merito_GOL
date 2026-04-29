@@ -49,4 +49,6 @@ export interface TeachingAssignment {
 
 export interface GradeFilterState {
   search: string
+  semester: Semester | null
+  gradeStatus: 'all' | 'graded' | 'missing'
 }
