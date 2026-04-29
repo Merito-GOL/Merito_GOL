@@ -3,9 +3,9 @@ const auth = useAuthStore()
 </script>
 
 <template>
-  <div class="student-layout">
+  <div class="teacher-layout">
     <AppTopbar :user="auth.currentUser.value" />
-    <div class="student-layout__body">
+    <div class="teacher-layout__body">
       <slot />
     </div>
     <AppToast />
@@ -15,7 +15,7 @@ const auth = useAuthStore()
 <style scoped lang="scss">
 @use '~/assets/scss/variables' as *;
 
-.student-layout {
+.teacher-layout {
   min-height: 100dvh;
   background: $color-surface;
   font-family: $font-sans;
@@ -28,7 +28,7 @@ const auth = useAuthStore()
     max-width: $content-max-width;
     width: 100%;
     margin: 0 auto;
-    padding: 24px 28px;
+    padding: 28px 28px;
 
     @media (max-width: 640px) {
       padding: 16px;
