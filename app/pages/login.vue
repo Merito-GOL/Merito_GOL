@@ -6,9 +6,18 @@ definePageMeta({
 const auth = useAuthStore()
 const router = useRouter()
 
-const handleLogin = () => {
-  auth.login('student')
-  router.push('/student')
+const email = ref('')
+const password = ref('')
+
+const handleLogin = async () => {
+  const user = await auth.login(email.value, password.value)
+  if (user) {
+    if (user.role === 'student') {
+      router.push('/student')
+    } else if (user.role === 'teacher') {
+      router.push('/teacher')
+    }
+  }
 }
 </script>
 
@@ -17,13 +26,15 @@ const handleLogin = () => {
     <div class="login__card">
       <h1 class="login__title">Logowanie</h1>
 
-      <form class="login__form">
+      <form class="login__form" @submit.prevent="handleLogin">
         <div class="login__field">
           <label for="email">Email</label>
           <input
             id="email"
+            v-model="email"
             type="email"
             placeholder="Wpisz email"
+            required
           />
         </div>
 
@@ -31,13 +42,19 @@ const handleLogin = () => {
           <label for="password">Hasło</label>
           <input
             id="password"
+            v-model="password"
             type="password"
             placeholder="Wpisz hasło"
+            required
           />
         </div>
 
-        <button type="button" class="login__button" @click="handleLogin">
-        Zaloguj się
+        <p v-if="auth.error.value" class="login__error">
+          {{ auth.error.value }}
+        </p>
+
+        <button type="submit" class="login__button" :disabled="auth.loading.value">
+          {{ auth.loading.value ? 'Logowanie...' : 'Zaloguj się' }}
         </button>
       </form>
     </div>
@@ -88,6 +105,19 @@ const handleLogin = () => {
     color: white;
     font-weight: 600;
     cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  &__error {
+    color: #dc2626;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 8px;
   }
 }
 </style>

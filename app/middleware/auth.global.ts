@@ -6,12 +6,12 @@ export default defineNuxtRouteMiddleware((to) => {
 
   const auth = useAuthStore()
 
-  // Bezpośrednio przywracamy stan z localStorage
-  auth.restoreAuth()
+  // Przywracamy stan z localStorage
+  auth.restore()
 
   const publicRoutes = ['/login', '/register']
 
-  if (!auth.isAuthenticated && !publicRoutes.includes(to.path)) {
+  if (!auth.currentUser.value && !publicRoutes.includes(to.path)) {
     return navigateTo('/login')
   }
 })

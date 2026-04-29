@@ -1,7 +1,7 @@
 <script setup lang="ts">
   const auth = useAuthStore()
 
-  auth.initAuth()
+  auth.restore()
 </script>
 
 <template>
