@@ -10,173 +10,1497 @@
     "studentSemesterSummaries": "Student semester summaries store calculated averages and semester status for each student and semester."
   },
   "departments": [
-    { "id": 1, "name": "Wydzial Informatyki i Nowych Technologii" },
-    { "id": 2, "name": "Wydzial Zarzadzania" },
-    { "id": 3, "name": "Wydzial Nauk Spolecznych" }
+    {
+      "id": "1",
+      "name": "Wydzial Informatyki i Nowych Technologii"
+    },
+    {
+      "id": "2",
+      "name": "Wydzial Zarzadzania"
+    },
+    {
+      "id": "3",
+      "name": "Wydzial Nauk Spolecznych"
+    }
   ],
   "fieldsOfStudy": [
-    { "id": 1, "name": "Informatyka", "departmentId": 1 },
-    { "id": 2, "name": "Cyberbezpieczenstwo", "departmentId": 1 },
-    { "id": 3, "name": "Data Science", "departmentId": 1 },
-    { "id": 4, "name": "Zarzadzanie", "departmentId": 2 },
-    { "id": 5, "name": "Finanse i rachunkowosc", "departmentId": 2 },
-    { "id": 6, "name": "Psychologia", "departmentId": 3 }
+    {
+      "id": "1",
+      "name": "Informatyka",
+      "departmentId": 1
+    },
+    {
+      "id": "2",
+      "name": "Cyberbezpieczenstwo",
+      "departmentId": 1
+    },
+    {
+      "id": "3",
+      "name": "Data Science",
+      "departmentId": 1
+    },
+    {
+      "id": "4",
+      "name": "Zarzadzanie",
+      "departmentId": 2
+    },
+    {
+      "id": "5",
+      "name": "Finanse i rachunkowosc",
+      "departmentId": 2
+    },
+    {
+      "id": "6",
+      "name": "Psychologia",
+      "departmentId": 3
+    }
   ],
   "groups": [
-    { "id": 1, "code": "INF-3A", "departmentId": 1, "fieldOfStudyId": 1 },
-    { "id": 2, "code": "INF-3B", "departmentId": 1, "fieldOfStudyId": 1 },
-    { "id": 3, "code": "INF-2A", "departmentId": 1, "fieldOfStudyId": 1 },
-    { "id": 4, "code": "CYB-2A", "departmentId": 1, "fieldOfStudyId": 2 },
-    { "id": 5, "code": "DS-1A", "departmentId": 1, "fieldOfStudyId": 3 },
-    { "id": 6, "code": "ZAR-2A", "departmentId": 2, "fieldOfStudyId": 4 },
-    { "id": 7, "code": "FIN-1A", "departmentId": 2, "fieldOfStudyId": 5 },
-    { "id": 8, "code": "PSY-1A", "departmentId": 3, "fieldOfStudyId": 6 }
+    {
+      "id": "1",
+      "code": "INF-3A",
+      "departmentId": 1,
+      "fieldOfStudyId": 1
+    },
+    {
+      "id": "2",
+      "code": "INF-3B",
+      "departmentId": 1,
+      "fieldOfStudyId": 1
+    },
+    {
+      "id": "3",
+      "code": "INF-2A",
+      "departmentId": 1,
+      "fieldOfStudyId": 1
+    },
+    {
+      "id": "4",
+      "code": "CYB-2A",
+      "departmentId": 1,
+      "fieldOfStudyId": 2
+    },
+    {
+      "id": "5",
+      "code": "DS-1A",
+      "departmentId": 1,
+      "fieldOfStudyId": 3
+    },
+    {
+      "id": "6",
+      "code": "ZAR-2A",
+      "departmentId": 2,
+      "fieldOfStudyId": 4
+    },
+    {
+      "id": "7",
+      "code": "FIN-1A",
+      "departmentId": 2,
+      "fieldOfStudyId": 5
+    },
+    {
+      "id": "8",
+      "code": "PSY-1A",
+      "departmentId": 3,
+      "fieldOfStudyId": 6
+    }
   ],
   "semesters": [
-    { "id": 1, "label": "Semestr 4 (letni) (2025/26)", "number": 4, "term": "letni", "academicYear": "2025/26" },
-    { "id": 2, "label": "Semestr 3 (zimowy) (2025/26)", "number": 3, "term": "zimowy", "academicYear": "2025/26" },
-    { "id": 3, "label": "Semestr 2 (letni) (2024/25)", "number": 2, "term": "letni", "academicYear": "2024/25" },
-    { "id": 4, "label": "Semestr 1 (zimowy) (2024/25)", "number": 1, "term": "zimowy", "academicYear": "2024/25" }
+    {
+      "id": "1",
+      "label": "Semestr 4 (letni) (2025/26)",
+      "number": 4,
+      "term": "letni",
+      "academicYear": "2025/26"
+    },
+    {
+      "id": "2",
+      "label": "Semestr 3 (zimowy) (2025/26)",
+      "number": 3,
+      "term": "zimowy",
+      "academicYear": "2025/26"
+    },
+    {
+      "id": "3",
+      "label": "Semestr 2 (letni) (2024/25)",
+      "number": 2,
+      "term": "letni",
+      "academicYear": "2024/25"
+    },
+    {
+      "id": "4",
+      "label": "Semestr 1 (zimowy) (2024/25)",
+      "number": 1,
+      "term": "zimowy",
+      "academicYear": "2024/25"
+    }
   ],
   "users": [
-    { "id": 1, "role": "student", "email": "jan.kowalski@meritogol.pl", "password": "student123", "firstName": "Jan", "lastName": "Kowalski", "albumNumber": "S-21321", "departmentId": 1, "fieldOfStudyId": 1, "groupId": 1 },
-    { "id": 2, "role": "teacher", "email": "dr.anna.wisniewska@meritogol.pl", "password": "teacher123", "title": "dr", "firstName": "Anna", "lastName": "Wisniewska", "departmentId": 1 },
-    { "id": 3, "role": "teacher", "email": "mgr.karol.mazur@meritogol.pl", "password": "teacher123", "title": "mgr", "firstName": "Karol", "lastName": "Mazur", "departmentId": 1 },
-    { "id": 4, "role": "student", "email": "aleksandra.adamska@meritogol.pl", "password": "student123", "firstName": "Aleksandra", "lastName": "Adamska", "albumNumber": "S-21043", "departmentId": 1, "fieldOfStudyId": 1, "groupId": 1 },
-    { "id": 5, "role": "student", "email": "bartosz.banasik@meritogol.pl", "password": "student123", "firstName": "Bartosz", "lastName": "Banasik", "albumNumber": "S-21089", "departmentId": 1, "fieldOfStudyId": 1, "groupId": 2 },
-    { "id": 6, "role": "student", "email": "dominika.dudek@meritogol.pl", "password": "student123", "firstName": "Dominika", "lastName": "Dudek", "albumNumber": "S-21117", "departmentId": 1, "fieldOfStudyId": 2, "groupId": 4 },
-    { "id": 7, "role": "student", "email": "emilia.ejsmont@meritogol.pl", "password": "student123", "firstName": "Emilia", "lastName": "Ejsmont", "albumNumber": "S-21134", "departmentId": 1, "fieldOfStudyId": 1, "groupId": 1 },
-    { "id": 8, "role": "student", "email": "filip.frankowski@meritogol.pl", "password": "student123", "firstName": "Filip", "lastName": "Frankowski", "albumNumber": "S-21158", "departmentId": 1, "fieldOfStudyId": 1, "groupId": 2 },
-    { "id": 9, "role": "student", "email": "iga.iwanska@meritogol.pl", "password": "student123", "firstName": "Iga", "lastName": "Iwanska", "albumNumber": "S-21205", "departmentId": 1, "fieldOfStudyId": 2, "groupId": 4 },
-    { "id": 10, "role": "student", "email": "marta.nowak@meritogol.pl", "password": "student123", "firstName": "Marta", "lastName": "Nowak", "albumNumber": "S-31001", "departmentId": 2, "fieldOfStudyId": 4, "groupId": 6 },
-    { "id": 11, "role": "teacher", "email": "dr.tomasz.bak@meritogol.pl", "password": "teacher123", "title": "dr", "firstName": "Tomasz", "lastName": "Bak", "departmentId": 1 },
-    { "id": 12, "role": "teacher", "email": "dr.marta.nowak@meritogol.pl", "password": "teacher123", "title": "dr", "firstName": "Marta", "lastName": "Nowak", "departmentId": 1 },
-    { "id": 13, "role": "teacher", "email": "dr.piotr.lis@meritogol.pl", "password": "teacher123", "title": "dr hab.", "firstName": "Piotr", "lastName": "Lis", "departmentId": 1 },
-    { "id": 14, "role": "teacher", "email": "dr.ewa.kaminska@meritogol.pl", "password": "teacher123", "title": "dr", "firstName": "Ewa", "lastName": "Kaminska", "departmentId": 2 },
-    { "id": 15, "role": "teacher", "email": "dr.pawel.lewandowski@meritogol.pl", "password": "teacher123", "title": "dr", "firstName": "Pawel", "lastName": "Lewandowski", "departmentId": 3 },
-    { "id": 16, "role": "student", "email": "cezary.cichocki@meritogol.pl", "password": "student123", "firstName": "Cezary", "lastName": "Cichocki", "albumNumber": "S-21102", "departmentId": 1, "fieldOfStudyId": 1, "groupId": 3 },
-    { "id": 17, "role": "student", "email": "gabriela.gorska@meritogol.pl", "password": "student123", "firstName": "Gabriela", "lastName": "Gorska", "albumNumber": "S-21176", "departmentId": 1, "fieldOfStudyId": 1, "groupId": 1 },
-    { "id": 18, "role": "student", "email": "hubert.hawrylak@meritogol.pl", "password": "student123", "firstName": "Hubert", "lastName": "Hawrylak", "albumNumber": "S-21184", "departmentId": 1, "fieldOfStudyId": 1, "groupId": 2 },
-    { "id": 19, "role": "student", "email": "jakub.jarosz@meritogol.pl", "password": "student123", "firstName": "Jakub", "lastName": "Jarosz", "albumNumber": "S-21219", "departmentId": 1, "fieldOfStudyId": 2, "groupId": 4 },
-    { "id": 20, "role": "student", "email": "karolina.kwiatkowska@meritogol.pl", "password": "student123", "firstName": "Karolina", "lastName": "Kwiatkowska", "albumNumber": "S-21234", "departmentId": 1, "fieldOfStudyId": 3, "groupId": 5 },
-    { "id": 21, "role": "student", "email": "lukasz.lasocki@meritogol.pl", "password": "student123", "firstName": "Lukasz", "lastName": "Lasocki", "albumNumber": "S-21246", "departmentId": 1, "fieldOfStudyId": 3, "groupId": 5 },
-    { "id": 22, "role": "student", "email": "magdalena.maj@meritogol.pl", "password": "student123", "firstName": "Magdalena", "lastName": "Maj", "albumNumber": "S-21261", "departmentId": 1, "fieldOfStudyId": 1, "groupId": 3 },
-    { "id": 23, "role": "student", "email": "norbert.nowicki@meritogol.pl", "password": "student123", "firstName": "Norbert", "lastName": "Nowicki", "albumNumber": "S-21275", "departmentId": 1, "fieldOfStudyId": 2, "groupId": 4 },
-    { "id": 24, "role": "student", "email": "oliwia.orlowska@meritogol.pl", "password": "student123", "firstName": "Oliwia", "lastName": "Orlowska", "albumNumber": "S-21288", "departmentId": 1, "fieldOfStudyId": 1, "groupId": 1 },
-    { "id": 25, "role": "student", "email": "patryk.pawlak@meritogol.pl", "password": "student123", "firstName": "Patryk", "lastName": "Pawlak", "albumNumber": "S-21294", "departmentId": 1, "fieldOfStudyId": 1, "groupId": 2 },
-    { "id": 26, "role": "student", "email": "roksana.rogalska@meritogol.pl", "password": "student123", "firstName": "Roksana", "lastName": "Rogalska", "albumNumber": "S-21307", "departmentId": 1, "fieldOfStudyId": 3, "groupId": 5 },
-    { "id": 27, "role": "student", "email": "anna.zielinska@meritogol.pl", "password": "student123", "firstName": "Anna", "lastName": "Zielinska", "albumNumber": "S-31011", "departmentId": 2, "fieldOfStudyId": 4, "groupId": 6 },
-    { "id": 28, "role": "student", "email": "kamil.wozniak@meritogol.pl", "password": "student123", "firstName": "Kamil", "lastName": "Wozniak", "albumNumber": "S-32002", "departmentId": 2, "fieldOfStudyId": 5, "groupId": 7 },
-    { "id": 29, "role": "student", "email": "natalia.krupa@meritogol.pl", "password": "student123", "firstName": "Natalia", "lastName": "Krupa", "albumNumber": "S-41003", "departmentId": 3, "fieldOfStudyId": 6, "groupId": 8 },
-    { "id": 30, "role": "student", "email": "piotr.malinowski@meritogol.pl", "password": "student123", "firstName": "Piotr", "lastName": "Malinowski", "albumNumber": "S-41008", "departmentId": 3, "fieldOfStudyId": 6, "groupId": 8 }
+    {
+      "id": "1",
+      "role": "student",
+      "email": "jan.kowalski@meritogol.pl",
+      "password": "student123",
+      "firstName": "Jan",
+      "lastName": "Kowalski",
+      "albumNumber": "S-21321",
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "groupId": 1
+    },
+    {
+      "id": "2",
+      "role": "teacher",
+      "email": "dr.anna.wisniewska@meritogol.pl",
+      "password": "teacher123",
+      "title": "dr",
+      "firstName": "Anna",
+      "lastName": "Wisniewska",
+      "departmentId": 1
+    },
+    {
+      "id": "3",
+      "role": "teacher",
+      "email": "mgr.karol.mazur@meritogol.pl",
+      "password": "teacher123",
+      "title": "mgr",
+      "firstName": "Karol",
+      "lastName": "Mazur",
+      "departmentId": 1
+    },
+    {
+      "id": "4",
+      "role": "student",
+      "email": "aleksandra.adamska@meritogol.pl",
+      "password": "student123",
+      "firstName": "Aleksandra",
+      "lastName": "Adamska",
+      "albumNumber": "S-21043",
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "groupId": 1
+    },
+    {
+      "id": "5",
+      "role": "student",
+      "email": "bartosz.banasik@meritogol.pl",
+      "password": "student123",
+      "firstName": "Bartosz",
+      "lastName": "Banasik",
+      "albumNumber": "S-21089",
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "groupId": 2
+    },
+    {
+      "id": "6",
+      "role": "student",
+      "email": "dominika.dudek@meritogol.pl",
+      "password": "student123",
+      "firstName": "Dominika",
+      "lastName": "Dudek",
+      "albumNumber": "S-21117",
+      "departmentId": 1,
+      "fieldOfStudyId": 2,
+      "groupId": 4
+    },
+    {
+      "id": "7",
+      "role": "student",
+      "email": "emilia.ejsmont@meritogol.pl",
+      "password": "student123",
+      "firstName": "Emilia",
+      "lastName": "Ejsmont",
+      "albumNumber": "S-21134",
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "groupId": 1
+    },
+    {
+      "id": "8",
+      "role": "student",
+      "email": "filip.frankowski@meritogol.pl",
+      "password": "student123",
+      "firstName": "Filip",
+      "lastName": "Frankowski",
+      "albumNumber": "S-21158",
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "groupId": 2
+    },
+    {
+      "id": "9",
+      "role": "student",
+      "email": "iga.iwanska@meritogol.pl",
+      "password": "student123",
+      "firstName": "Iga",
+      "lastName": "Iwanska",
+      "albumNumber": "S-21205",
+      "departmentId": 1,
+      "fieldOfStudyId": 2,
+      "groupId": 4
+    },
+    {
+      "id": "10",
+      "role": "student",
+      "email": "marta.nowak@meritogol.pl",
+      "password": "student123",
+      "firstName": "Marta",
+      "lastName": "Nowak",
+      "albumNumber": "S-31001",
+      "departmentId": 2,
+      "fieldOfStudyId": 4,
+      "groupId": 6
+    },
+    {
+      "id": "11",
+      "role": "teacher",
+      "email": "dr.tomasz.bak@meritogol.pl",
+      "password": "teacher123",
+      "title": "dr",
+      "firstName": "Tomasz",
+      "lastName": "Bak",
+      "departmentId": 1
+    },
+    {
+      "id": "12",
+      "role": "teacher",
+      "email": "dr.marta.nowak@meritogol.pl",
+      "password": "teacher123",
+      "title": "dr",
+      "firstName": "Marta",
+      "lastName": "Nowak",
+      "departmentId": 1
+    },
+    {
+      "id": "13",
+      "role": "teacher",
+      "email": "dr.piotr.lis@meritogol.pl",
+      "password": "teacher123",
+      "title": "dr hab.",
+      "firstName": "Piotr",
+      "lastName": "Lis",
+      "departmentId": 1
+    },
+    {
+      "id": "14",
+      "role": "teacher",
+      "email": "dr.ewa.kaminska@meritogol.pl",
+      "password": "teacher123",
+      "title": "dr",
+      "firstName": "Ewa",
+      "lastName": "Kaminska",
+      "departmentId": 2
+    },
+    {
+      "id": "15",
+      "role": "teacher",
+      "email": "dr.pawel.lewandowski@meritogol.pl",
+      "password": "teacher123",
+      "title": "dr",
+      "firstName": "Pawel",
+      "lastName": "Lewandowski",
+      "departmentId": 3
+    },
+    {
+      "id": "16",
+      "role": "student",
+      "email": "cezary.cichocki@meritogol.pl",
+      "password": "student123",
+      "firstName": "Cezary",
+      "lastName": "Cichocki",
+      "albumNumber": "S-21102",
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "groupId": 3
+    },
+    {
+      "id": "17",
+      "role": "student",
+      "email": "gabriela.gorska@meritogol.pl",
+      "password": "student123",
+      "firstName": "Gabriela",
+      "lastName": "Gorska",
+      "albumNumber": "S-21176",
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "groupId": 1
+    },
+    {
+      "id": "18",
+      "role": "student",
+      "email": "hubert.hawrylak@meritogol.pl",
+      "password": "student123",
+      "firstName": "Hubert",
+      "lastName": "Hawrylak",
+      "albumNumber": "S-21184",
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "groupId": 2
+    },
+    {
+      "id": "19",
+      "role": "student",
+      "email": "jakub.jarosz@meritogol.pl",
+      "password": "student123",
+      "firstName": "Jakub",
+      "lastName": "Jarosz",
+      "albumNumber": "S-21219",
+      "departmentId": 1,
+      "fieldOfStudyId": 2,
+      "groupId": 4
+    },
+    {
+      "id": "20",
+      "role": "student",
+      "email": "karolina.kwiatkowska@meritogol.pl",
+      "password": "student123",
+      "firstName": "Karolina",
+      "lastName": "Kwiatkowska",
+      "albumNumber": "S-21234",
+      "departmentId": 1,
+      "fieldOfStudyId": 3,
+      "groupId": 5
+    },
+    {
+      "id": "21",
+      "role": "student",
+      "email": "lukasz.lasocki@meritogol.pl",
+      "password": "student123",
+      "firstName": "Lukasz",
+      "lastName": "Lasocki",
+      "albumNumber": "S-21246",
+      "departmentId": 1,
+      "fieldOfStudyId": 3,
+      "groupId": 5
+    },
+    {
+      "id": "22",
+      "role": "student",
+      "email": "magdalena.maj@meritogol.pl",
+      "password": "student123",
+      "firstName": "Magdalena",
+      "lastName": "Maj",
+      "albumNumber": "S-21261",
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "groupId": 3
+    },
+    {
+      "id": "23",
+      "role": "student",
+      "email": "norbert.nowicki@meritogol.pl",
+      "password": "student123",
+      "firstName": "Norbert",
+      "lastName": "Nowicki",
+      "albumNumber": "S-21275",
+      "departmentId": 1,
+      "fieldOfStudyId": 2,
+      "groupId": 4
+    },
+    {
+      "id": "24",
+      "role": "student",
+      "email": "oliwia.orlowska@meritogol.pl",
+      "password": "student123",
+      "firstName": "Oliwia",
+      "lastName": "Orlowska",
+      "albumNumber": "S-21288",
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "groupId": 1
+    },
+    {
+      "id": "25",
+      "role": "student",
+      "email": "patryk.pawlak@meritogol.pl",
+      "password": "student123",
+      "firstName": "Patryk",
+      "lastName": "Pawlak",
+      "albumNumber": "S-21294",
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "groupId": 2
+    },
+    {
+      "id": "26",
+      "role": "student",
+      "email": "roksana.rogalska@meritogol.pl",
+      "password": "student123",
+      "firstName": "Roksana",
+      "lastName": "Rogalska",
+      "albumNumber": "S-21307",
+      "departmentId": 1,
+      "fieldOfStudyId": 3,
+      "groupId": 5
+    },
+    {
+      "id": "27",
+      "role": "student",
+      "email": "anna.zielinska@meritogol.pl",
+      "password": "student123",
+      "firstName": "Anna",
+      "lastName": "Zielinska",
+      "albumNumber": "S-31011",
+      "departmentId": 2,
+      "fieldOfStudyId": 4,
+      "groupId": 6
+    },
+    {
+      "id": "28",
+      "role": "student",
+      "email": "kamil.wozniak@meritogol.pl",
+      "password": "student123",
+      "firstName": "Kamil",
+      "lastName": "Wozniak",
+      "albumNumber": "S-32002",
+      "departmentId": 2,
+      "fieldOfStudyId": 5,
+      "groupId": 7
+    },
+    {
+      "id": "29",
+      "role": "student",
+      "email": "natalia.krupa@meritogol.pl",
+      "password": "student123",
+      "firstName": "Natalia",
+      "lastName": "Krupa",
+      "albumNumber": "S-41003",
+      "departmentId": 3,
+      "fieldOfStudyId": 6,
+      "groupId": 8
+    },
+    {
+      "id": "30",
+      "role": "student",
+      "email": "piotr.malinowski@meritogol.pl",
+      "password": "student123",
+      "firstName": "Piotr",
+      "lastName": "Malinowski",
+      "albumNumber": "S-41008",
+      "departmentId": 3,
+      "fieldOfStudyId": 6,
+      "groupId": 8
+    },
+    {
+      "role": "student",
+      "email": "testowystudent@test.com",
+      "password": "test123",
+      "firstName": "testowy",
+      "lastName": "student",
+      "departmentId": 1,
+      "albumNumber": "S-98213",
+      "fieldOfStudyId": 1,
+      "groupId": 1,
+      "id": "97Wgo1yq05U"
+    }
   ],
   "courses": [
-    { "id": 1, "name": "RIA, Case study: Angular", "hours": 16, "ects": 3, "departmentId": 1, "fieldOfStudyId": 1, "semesterId": 1, "defaultTeacherId": 2 },
-    { "id": 2, "name": "Seminarium dyplomowe", "hours": 20, "ects": 8, "departmentId": 1, "fieldOfStudyId": 1, "semesterId": 1, "defaultTeacherId": 13 },
-    { "id": 3, "name": "Technologie tworzenia stron WWW", "hours": 16, "ects": 3, "departmentId": 1, "fieldOfStudyId": 1, "semesterId": 1, "defaultTeacherId": 3 },
-    { "id": 4, "name": "Tworzenie aplikacji PWA", "hours": 16, "ects": 3, "departmentId": 1, "fieldOfStudyId": 1, "semesterId": 1, "defaultTeacherId": 11 },
-    { "id": 5, "name": "Zarzadzanie bezpieczenstwem informacji - warsztaty", "hours": 16, "ects": 2, "departmentId": 1, "fieldOfStudyId": 2, "semesterId": 1, "defaultTeacherId": 12 },
-    { "id": 6, "name": "Zespolowy projekt bezpieczenstwa", "hours": 16, "ects": 3, "departmentId": 1, "fieldOfStudyId": 2, "semesterId": 2, "defaultTeacherId": 12 },
-    { "id": 7, "name": "Zintegrowane systemy zarzadzania bezpieczenstwem", "hours": 16, "ects": 3, "departmentId": 1, "fieldOfStudyId": 2, "semesterId": 2, "defaultTeacherId": 11 },
-    { "id": 8, "name": "Programowanie obiektowe", "hours": 30, "ects": 5, "departmentId": 1, "fieldOfStudyId": 1, "semesterId": 4, "defaultTeacherId": 2 },
-    { "id": 9, "name": "Bazy danych", "hours": 30, "ects": 5, "departmentId": 1, "fieldOfStudyId": 1, "semesterId": 3, "defaultTeacherId": 3 },
-    { "id": 10, "name": "Algorytmy i struktury danych", "hours": 30, "ects": 5, "departmentId": 1, "fieldOfStudyId": 1, "semesterId": 2, "defaultTeacherId": 2 },
-    { "id": 11, "name": "Analiza danych w Pythonie", "hours": 24, "ects": 4, "departmentId": 1, "fieldOfStudyId": 3, "semesterId": 1, "defaultTeacherId": 3 },
-    { "id": 12, "name": "Uczenie maszynowe - podstawy", "hours": 24, "ects": 4, "departmentId": 1, "fieldOfStudyId": 3, "semesterId": 2, "defaultTeacherId": 2 },
-    { "id": 13, "name": "Sieci komputerowe", "hours": 24, "ects": 4, "departmentId": 1, "fieldOfStudyId": 2, "semesterId": 3, "defaultTeacherId": 11 },
-    { "id": 14, "name": "Zarzadzanie projektami - gra biznesowa", "hours": 16, "ects": 2, "departmentId": 2, "fieldOfStudyId": 4, "semesterId": 1, "defaultTeacherId": 14 },
-    { "id": 15, "name": "Podstawy rachunkowosci", "hours": 24, "ects": 4, "departmentId": 2, "fieldOfStudyId": 5, "semesterId": 4, "defaultTeacherId": 14 },
-    { "id": 16, "name": "Marketing internetowy", "hours": 18, "ects": 3, "departmentId": 2, "fieldOfStudyId": 4, "semesterId": 2, "defaultTeacherId": 14 },
-    { "id": 17, "name": "Psychologia spoleczna", "hours": 24, "ects": 4, "departmentId": 3, "fieldOfStudyId": 6, "semesterId": 4, "defaultTeacherId": 15 },
-    { "id": 18, "name": "Metody badan psychologicznych", "hours": 24, "ects": 4, "departmentId": 3, "fieldOfStudyId": 6, "semesterId": 3, "defaultTeacherId": 15 }
+    {
+      "id": "1",
+      "name": "RIA, Case study: Angular",
+      "hours": 16,
+      "ects": 3,
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "semesterId": 1,
+      "defaultTeacherId": 2
+    },
+    {
+      "id": "2",
+      "name": "Seminarium dyplomowe",
+      "hours": 20,
+      "ects": 8,
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "semesterId": 1,
+      "defaultTeacherId": 13
+    },
+    {
+      "id": "3",
+      "name": "Technologie tworzenia stron WWW",
+      "hours": 16,
+      "ects": 3,
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "semesterId": 1,
+      "defaultTeacherId": 3
+    },
+    {
+      "id": "4",
+      "name": "Tworzenie aplikacji PWA",
+      "hours": 16,
+      "ects": 3,
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "semesterId": 1,
+      "defaultTeacherId": 11
+    },
+    {
+      "id": "5",
+      "name": "Zarzadzanie bezpieczenstwem informacji - warsztaty",
+      "hours": 16,
+      "ects": 2,
+      "departmentId": 1,
+      "fieldOfStudyId": 2,
+      "semesterId": 1,
+      "defaultTeacherId": 12
+    },
+    {
+      "id": "6",
+      "name": "Zespolowy projekt bezpieczenstwa",
+      "hours": 16,
+      "ects": 3,
+      "departmentId": 1,
+      "fieldOfStudyId": 2,
+      "semesterId": 2,
+      "defaultTeacherId": 12
+    },
+    {
+      "id": "7",
+      "name": "Zintegrowane systemy zarzadzania bezpieczenstwem",
+      "hours": 16,
+      "ects": 3,
+      "departmentId": 1,
+      "fieldOfStudyId": 2,
+      "semesterId": 2,
+      "defaultTeacherId": 11
+    },
+    {
+      "id": "8",
+      "name": "Programowanie obiektowe",
+      "hours": 30,
+      "ects": 5,
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "semesterId": 4,
+      "defaultTeacherId": 2
+    },
+    {
+      "id": "9",
+      "name": "Bazy danych",
+      "hours": 30,
+      "ects": 5,
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "semesterId": 3,
+      "defaultTeacherId": 3
+    },
+    {
+      "id": "10",
+      "name": "Algorytmy i struktury danych",
+      "hours": 30,
+      "ects": 5,
+      "departmentId": 1,
+      "fieldOfStudyId": 1,
+      "semesterId": 2,
+      "defaultTeacherId": 2
+    },
+    {
+      "id": "11",
+      "name": "Analiza danych w Pythonie",
+      "hours": 24,
+      "ects": 4,
+      "departmentId": 1,
+      "fieldOfStudyId": 3,
+      "semesterId": 1,
+      "defaultTeacherId": 3
+    },
+    {
+      "id": "12",
+      "name": "Uczenie maszynowe - podstawy",
+      "hours": 24,
+      "ects": 4,
+      "departmentId": 1,
+      "fieldOfStudyId": 3,
+      "semesterId": 2,
+      "defaultTeacherId": 2
+    },
+    {
+      "id": "13",
+      "name": "Sieci komputerowe",
+      "hours": 24,
+      "ects": 4,
+      "departmentId": 1,
+      "fieldOfStudyId": 2,
+      "semesterId": 3,
+      "defaultTeacherId": 11
+    },
+    {
+      "id": "14",
+      "name": "Zarzadzanie projektami - gra biznesowa",
+      "hours": 16,
+      "ects": 2,
+      "departmentId": 2,
+      "fieldOfStudyId": 4,
+      "semesterId": 1,
+      "defaultTeacherId": 14
+    },
+    {
+      "id": "15",
+      "name": "Podstawy rachunkowosci",
+      "hours": 24,
+      "ects": 4,
+      "departmentId": 2,
+      "fieldOfStudyId": 5,
+      "semesterId": 4,
+      "defaultTeacherId": 14
+    },
+    {
+      "id": "16",
+      "name": "Marketing internetowy",
+      "hours": 18,
+      "ects": 3,
+      "departmentId": 2,
+      "fieldOfStudyId": 4,
+      "semesterId": 2,
+      "defaultTeacherId": 14
+    },
+    {
+      "id": "17",
+      "name": "Psychologia spoleczna",
+      "hours": 24,
+      "ects": 4,
+      "departmentId": 3,
+      "fieldOfStudyId": 6,
+      "semesterId": 4,
+      "defaultTeacherId": 15
+    },
+    {
+      "id": "18",
+      "name": "Metody badan psychologicznych",
+      "hours": 24,
+      "ects": 4,
+      "departmentId": 3,
+      "fieldOfStudyId": 6,
+      "semesterId": 3,
+      "defaultTeacherId": 15
+    }
   ],
   "grades": [
-    { "id": 1, "studentId": 1, "courseId": 1, "value": 5, "type": "Ocena koncowa", "date": "2026-03-12", "createdBy": 2, "updatedAt": "2026-03-12T10:30:00.000Z" },
-    { "id": 2, "studentId": 1, "courseId": 2, "value": 4.5, "type": "Ocena koncowa", "date": "2026-03-08", "createdBy": 13, "updatedAt": "2026-03-08T12:15:00.000Z" },
-    { "id": 3, "studentId": 1, "courseId": 3, "value": 5, "type": "Ocena koncowa", "date": "2026-02-28", "createdBy": 3, "updatedAt": "2026-02-28T09:40:00.000Z" },
-    { "id": 4, "studentId": 1, "courseId": 4, "value": 5, "type": "Ocena koncowa", "date": "2026-03-15", "createdBy": 11, "updatedAt": "2026-03-15T13:00:00.000Z" },
-    { "id": 5, "studentId": 1, "courseId": 8, "value": 4.5, "type": "Ocena koncowa", "date": "2025-02-10", "createdBy": 2, "updatedAt": "2025-02-10T09:15:00.000Z" },
-    { "id": 6, "studentId": 1, "courseId": 9, "value": 4, "type": "Ocena koncowa", "date": "2025-06-18", "createdBy": 3, "updatedAt": "2025-06-18T11:20:00.000Z" },
-    { "id": 7, "studentId": 1, "courseId": 10, "value": 4.5, "type": "Ocena koncowa", "date": "2025-12-20", "createdBy": 2, "updatedAt": "2025-12-20T15:00:00.000Z" },
-    { "id": 8, "studentId": 4, "courseId": 1, "value": 4.5, "type": "Ocena koncowa", "date": "2026-03-14", "createdBy": 2, "updatedAt": "2026-03-14T10:00:00.000Z" },
-    { "id": 9, "studentId": 4, "courseId": 3, "value": 5, "type": "Ocena koncowa", "date": "2026-03-02", "createdBy": 3, "updatedAt": "2026-03-02T08:45:00.000Z" },
-    { "id": 10, "studentId": 4, "courseId": 4, "value": 4, "type": "Ocena koncowa", "date": "2026-03-16", "createdBy": 11, "updatedAt": "2026-03-16T10:00:00.000Z" },
-    { "id": 11, "studentId": 5, "courseId": 1, "value": 4, "type": "Ocena koncowa", "date": "2026-03-14", "createdBy": 2, "updatedAt": "2026-03-14T10:10:00.000Z" },
-    { "id": 12, "studentId": 5, "courseId": 3, "value": 3.5, "type": "Ocena koncowa", "date": "2026-03-02", "createdBy": 3, "updatedAt": "2026-03-02T08:55:00.000Z" },
-    { "id": 13, "studentId": 5, "courseId": 9, "value": 4, "type": "Ocena koncowa", "date": "2025-06-18", "createdBy": 3, "updatedAt": "2025-06-18T11:30:00.000Z" },
-    { "id": 14, "studentId": 6, "courseId": 5, "value": 3.5, "type": "Ocena koncowa", "date": "2026-02-21", "createdBy": 12, "updatedAt": "2026-02-21T11:10:00.000Z" },
-    { "id": 15, "studentId": 6, "courseId": 6, "value": 4, "type": "Ocena koncowa", "date": "2026-01-22", "createdBy": 12, "updatedAt": "2026-01-22T13:10:00.000Z" },
-    { "id": 16, "studentId": 6, "courseId": 13, "value": 4.5, "type": "Ocena koncowa", "date": "2025-06-20", "createdBy": 11, "updatedAt": "2025-06-20T10:00:00.000Z" },
-    { "id": 17, "studentId": 7, "courseId": 1, "value": 5, "type": "Ocena koncowa", "date": "2026-03-12", "createdBy": 2, "updatedAt": "2026-03-12T11:00:00.000Z" },
-    { "id": 18, "studentId": 7, "courseId": 2, "value": 4.5, "type": "Ocena koncowa", "date": "2026-03-09", "createdBy": 13, "updatedAt": "2026-03-09T12:00:00.000Z" },
-    { "id": 19, "studentId": 7, "courseId": 8, "value": 5, "type": "Ocena koncowa", "date": "2025-02-11", "createdBy": 2, "updatedAt": "2025-02-11T09:00:00.000Z" },
-    { "id": 20, "studentId": 8, "courseId": 1, "value": 3.5, "type": "Ocena koncowa", "date": "2026-03-12", "createdBy": 2, "updatedAt": "2026-03-12T11:20:00.000Z" },
-    { "id": 21, "studentId": 8, "courseId": 3, "value": 4, "type": "Ocena koncowa", "date": "2026-03-03", "createdBy": 3, "updatedAt": "2026-03-03T09:20:00.000Z" },
-    { "id": 22, "studentId": 8, "courseId": 4, "value": 4.5, "type": "Ocena koncowa", "date": "2026-03-16", "createdBy": 11, "updatedAt": "2026-03-16T10:30:00.000Z" },
-    { "id": 23, "studentId": 9, "courseId": 5, "value": 5, "type": "Ocena koncowa", "date": "2026-02-21", "createdBy": 12, "updatedAt": "2026-02-21T12:00:00.000Z" },
-    { "id": 24, "studentId": 9, "courseId": 6, "value": 5, "type": "Ocena koncowa", "date": "2026-03-19", "createdBy": 12, "updatedAt": "2026-03-19T13:20:00.000Z" },
-    { "id": 25, "studentId": 9, "courseId": 7, "value": 4.5, "type": "Ocena koncowa", "date": "2026-01-30", "createdBy": 11, "updatedAt": "2026-01-30T14:20:00.000Z" },
-    { "id": 26, "studentId": 16, "courseId": 8, "value": 3, "type": "Ocena koncowa", "date": "2025-02-12", "createdBy": 2, "updatedAt": "2025-02-12T09:10:00.000Z" },
-    { "id": 27, "studentId": 16, "courseId": 9, "value": 3.5, "type": "Ocena koncowa", "date": "2025-06-18", "createdBy": 3, "updatedAt": "2025-06-18T11:00:00.000Z" },
-    { "id": 28, "studentId": 17, "courseId": 1, "value": 4, "type": "Ocena koncowa", "date": "2026-03-13", "createdBy": 2, "updatedAt": "2026-03-13T09:35:00.000Z" },
-    { "id": 29, "studentId": 17, "courseId": 2, "value": 5, "type": "Ocena koncowa", "date": "2026-03-09", "createdBy": 13, "updatedAt": "2026-03-09T12:20:00.000Z" },
-    { "id": 30, "studentId": 18, "courseId": 3, "value": 4.5, "type": "Ocena koncowa", "date": "2026-03-03", "createdBy": 3, "updatedAt": "2026-03-03T09:40:00.000Z" },
-    { "id": 31, "studentId": 18, "courseId": 4, "value": 3.5, "type": "Ocena koncowa", "date": "2026-03-16", "createdBy": 11, "updatedAt": "2026-03-16T10:45:00.000Z" },
-    { "id": 32, "studentId": 19, "courseId": 5, "value": 4, "type": "Ocena koncowa", "date": "2026-02-22", "createdBy": 12, "updatedAt": "2026-02-22T11:10:00.000Z" },
-    { "id": 33, "studentId": 19, "courseId": 13, "value": 3.5, "type": "Ocena koncowa", "date": "2025-06-22", "createdBy": 11, "updatedAt": "2025-06-22T10:25:00.000Z" },
-    { "id": 34, "studentId": 20, "courseId": 11, "value": 5, "type": "Ocena koncowa", "date": "2026-03-05", "createdBy": 3, "updatedAt": "2026-03-05T09:00:00.000Z" },
-    { "id": 35, "studentId": 20, "courseId": 12, "value": 4.5, "type": "Ocena koncowa", "date": "2026-01-25", "createdBy": 2, "updatedAt": "2026-01-25T10:20:00.000Z" },
-    { "id": 36, "studentId": 21, "courseId": 11, "value": 4, "type": "Ocena koncowa", "date": "2026-03-05", "createdBy": 3, "updatedAt": "2026-03-05T09:20:00.000Z" },
-    { "id": 37, "studentId": 21, "courseId": 12, "value": 4, "type": "Ocena koncowa", "date": "2026-01-25", "createdBy": 2, "updatedAt": "2026-01-25T10:40:00.000Z" },
-    { "id": 38, "studentId": 22, "courseId": 8, "value": 4.5, "type": "Ocena koncowa", "date": "2025-02-12", "createdBy": 2, "updatedAt": "2025-02-12T09:40:00.000Z" },
-    { "id": 39, "studentId": 22, "courseId": 9, "value": 4.5, "type": "Ocena koncowa", "date": "2025-06-19", "createdBy": 3, "updatedAt": "2025-06-19T11:40:00.000Z" },
-    { "id": 40, "studentId": 23, "courseId": 5, "value": 2, "type": "Ocena koncowa", "date": "2026-02-23", "createdBy": 12, "updatedAt": "2026-02-23T12:10:00.000Z" },
-    { "id": 41, "studentId": 23, "courseId": 6, "value": 3, "type": "Ocena koncowa", "date": "2026-03-20", "createdBy": 12, "updatedAt": "2026-03-20T13:10:00.000Z" },
-    { "id": 42, "studentId": 24, "courseId": 1, "value": 5, "type": "Ocena koncowa", "date": "2026-03-13", "createdBy": 2, "updatedAt": "2026-03-13T09:50:00.000Z" },
-    { "id": 43, "studentId": 24, "courseId": 4, "value": 5, "type": "Ocena koncowa", "date": "2026-03-16", "createdBy": 11, "updatedAt": "2026-03-16T11:00:00.000Z" },
-    { "id": 44, "studentId": 25, "courseId": 1, "value": 3, "type": "Ocena koncowa", "date": "2026-03-13", "createdBy": 2, "updatedAt": "2026-03-13T10:00:00.000Z" },
-    { "id": 45, "studentId": 25, "courseId": 3, "value": 3.5, "type": "Ocena koncowa", "date": "2026-03-04", "createdBy": 3, "updatedAt": "2026-03-04T09:50:00.000Z" },
-    { "id": 46, "studentId": 26, "courseId": 11, "value": 5, "type": "Ocena koncowa", "date": "2026-03-06", "createdBy": 3, "updatedAt": "2026-03-06T09:15:00.000Z" },
-    { "id": 47, "studentId": 26, "courseId": 12, "value": 5, "type": "Ocena koncowa", "date": "2026-01-26", "createdBy": 2, "updatedAt": "2026-01-26T10:15:00.000Z" },
-    { "id": 48, "studentId": 10, "courseId": 14, "value": 4, "type": "Ocena koncowa", "date": "2026-03-02", "createdBy": 14, "updatedAt": "2026-03-02T12:00:00.000Z" },
-    { "id": 49, "studentId": 10, "courseId": 16, "value": 4.5, "type": "Ocena koncowa", "date": "2026-01-19", "createdBy": 14, "updatedAt": "2026-01-19T10:00:00.000Z" },
-    { "id": 50, "studentId": 27, "courseId": 14, "value": 5, "type": "Ocena koncowa", "date": "2026-03-02", "createdBy": 14, "updatedAt": "2026-03-02T12:15:00.000Z" },
-    { "id": 51, "studentId": 27, "courseId": 16, "value": 4, "type": "Ocena koncowa", "date": "2026-01-19", "createdBy": 14, "updatedAt": "2026-01-19T10:20:00.000Z" },
-    { "id": 52, "studentId": 28, "courseId": 15, "value": 3.5, "type": "Ocena koncowa", "date": "2025-02-05", "createdBy": 14, "updatedAt": "2025-02-05T10:00:00.000Z" },
-    { "id": 53, "studentId": 29, "courseId": 17, "value": 4.5, "type": "Ocena koncowa", "date": "2025-02-07", "createdBy": 15, "updatedAt": "2025-02-07T09:00:00.000Z" },
-    { "id": 54, "studentId": 29, "courseId": 18, "value": 4, "type": "Ocena koncowa", "date": "2025-06-12", "createdBy": 15, "updatedAt": "2025-06-12T09:00:00.000Z" },
-    { "id": 55, "studentId": 30, "courseId": 17, "value": 3, "type": "Ocena koncowa", "date": "2025-02-07", "createdBy": 15, "updatedAt": "2025-02-07T09:20:00.000Z" },
-    { "id": 56, "studentId": 30, "courseId": 18, "value": 3.5, "type": "Ocena koncowa", "date": "2025-06-12", "createdBy": 15, "updatedAt": "2025-06-12T09:20:00.000Z" }
+    {
+      "id": "1",
+      "studentId": 1,
+      "courseId": 1,
+      "value": 5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-12",
+      "createdBy": 2,
+      "updatedAt": "2026-03-12T10:30:00.000Z"
+    },
+    {
+      "id": "2",
+      "studentId": 1,
+      "courseId": 2,
+      "value": 4.5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-08",
+      "createdBy": 13,
+      "updatedAt": "2026-03-08T12:15:00.000Z"
+    },
+    {
+      "id": "3",
+      "studentId": 1,
+      "courseId": 3,
+      "value": 5,
+      "type": "Ocena koncowa",
+      "date": "2026-02-28",
+      "createdBy": 3,
+      "updatedAt": "2026-02-28T09:40:00.000Z"
+    },
+    {
+      "id": "4",
+      "studentId": 1,
+      "courseId": 4,
+      "value": 5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-15",
+      "createdBy": 11,
+      "updatedAt": "2026-03-15T13:00:00.000Z"
+    },
+    {
+      "id": "5",
+      "studentId": 1,
+      "courseId": 8,
+      "value": 4.5,
+      "type": "Ocena koncowa",
+      "date": "2025-02-10",
+      "createdBy": 2,
+      "updatedAt": "2025-02-10T09:15:00.000Z"
+    },
+    {
+      "id": "6",
+      "studentId": 1,
+      "courseId": 9,
+      "value": 4,
+      "type": "Ocena koncowa",
+      "date": "2025-06-18",
+      "createdBy": 3,
+      "updatedAt": "2025-06-18T11:20:00.000Z"
+    },
+    {
+      "id": "7",
+      "studentId": 1,
+      "courseId": 10,
+      "value": 4.5,
+      "type": "Ocena koncowa",
+      "date": "2025-12-20",
+      "createdBy": 2,
+      "updatedAt": "2025-12-20T15:00:00.000Z"
+    },
+    {
+      "id": "8",
+      "studentId": 4,
+      "courseId": 1,
+      "value": 4.5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-14",
+      "createdBy": 2,
+      "updatedAt": "2026-03-14T10:00:00.000Z"
+    },
+    {
+      "id": "9",
+      "studentId": 4,
+      "courseId": 3,
+      "value": 5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-02",
+      "createdBy": 3,
+      "updatedAt": "2026-03-02T08:45:00.000Z"
+    },
+    {
+      "id": "10",
+      "studentId": 4,
+      "courseId": 4,
+      "value": 4,
+      "type": "Ocena koncowa",
+      "date": "2026-03-16",
+      "createdBy": 11,
+      "updatedAt": "2026-03-16T10:00:00.000Z"
+    },
+    {
+      "id": "11",
+      "studentId": 5,
+      "courseId": 1,
+      "value": 4,
+      "type": "Ocena koncowa",
+      "date": "2026-03-14",
+      "createdBy": 2,
+      "updatedAt": "2026-03-14T10:10:00.000Z"
+    },
+    {
+      "id": "12",
+      "studentId": 5,
+      "courseId": 3,
+      "value": 3.5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-02",
+      "createdBy": 3,
+      "updatedAt": "2026-03-02T08:55:00.000Z"
+    },
+    {
+      "id": "13",
+      "studentId": 5,
+      "courseId": 9,
+      "value": 4,
+      "type": "Ocena koncowa",
+      "date": "2025-06-18",
+      "createdBy": 3,
+      "updatedAt": "2025-06-18T11:30:00.000Z"
+    },
+    {
+      "id": "14",
+      "studentId": 6,
+      "courseId": 5,
+      "value": 3.5,
+      "type": "Ocena koncowa",
+      "date": "2026-02-21",
+      "createdBy": 12,
+      "updatedAt": "2026-02-21T11:10:00.000Z"
+    },
+    {
+      "id": "15",
+      "studentId": 6,
+      "courseId": 6,
+      "value": 4,
+      "type": "Ocena koncowa",
+      "date": "2026-01-22",
+      "createdBy": 12,
+      "updatedAt": "2026-01-22T13:10:00.000Z"
+    },
+    {
+      "id": "16",
+      "studentId": 6,
+      "courseId": 13,
+      "value": 4.5,
+      "type": "Ocena koncowa",
+      "date": "2025-06-20",
+      "createdBy": 11,
+      "updatedAt": "2025-06-20T10:00:00.000Z"
+    },
+    {
+      "id": "17",
+      "studentId": 7,
+      "courseId": 1,
+      "value": 5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-12",
+      "createdBy": 2,
+      "updatedAt": "2026-03-12T11:00:00.000Z"
+    },
+    {
+      "id": "18",
+      "studentId": 7,
+      "courseId": 2,
+      "value": 4.5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-09",
+      "createdBy": 13,
+      "updatedAt": "2026-03-09T12:00:00.000Z"
+    },
+    {
+      "id": "19",
+      "studentId": 7,
+      "courseId": 8,
+      "value": 5,
+      "type": "Ocena koncowa",
+      "date": "2025-02-11",
+      "createdBy": 2,
+      "updatedAt": "2025-02-11T09:00:00.000Z"
+    },
+    {
+      "id": "20",
+      "studentId": 8,
+      "courseId": 1,
+      "value": 3.5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-12",
+      "createdBy": 2,
+      "updatedAt": "2026-03-12T11:20:00.000Z"
+    },
+    {
+      "id": "21",
+      "studentId": 8,
+      "courseId": 3,
+      "value": 4,
+      "type": "Ocena koncowa",
+      "date": "2026-03-03",
+      "createdBy": 3,
+      "updatedAt": "2026-03-03T09:20:00.000Z"
+    },
+    {
+      "id": "22",
+      "studentId": 8,
+      "courseId": 4,
+      "value": 4.5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-16",
+      "createdBy": 11,
+      "updatedAt": "2026-03-16T10:30:00.000Z"
+    },
+    {
+      "id": "23",
+      "studentId": 9,
+      "courseId": 5,
+      "value": 5,
+      "type": "Ocena koncowa",
+      "date": "2026-02-21",
+      "createdBy": 12,
+      "updatedAt": "2026-02-21T12:00:00.000Z"
+    },
+    {
+      "id": "24",
+      "studentId": 9,
+      "courseId": 6,
+      "value": 5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-19",
+      "createdBy": 12,
+      "updatedAt": "2026-03-19T13:20:00.000Z"
+    },
+    {
+      "id": "25",
+      "studentId": 9,
+      "courseId": 7,
+      "value": 4.5,
+      "type": "Ocena koncowa",
+      "date": "2026-01-30",
+      "createdBy": 11,
+      "updatedAt": "2026-01-30T14:20:00.000Z"
+    },
+    {
+      "id": "26",
+      "studentId": 16,
+      "courseId": 8,
+      "value": 3,
+      "type": "Ocena koncowa",
+      "date": "2025-02-12",
+      "createdBy": 2,
+      "updatedAt": "2025-02-12T09:10:00.000Z"
+    },
+    {
+      "id": "27",
+      "studentId": 16,
+      "courseId": 9,
+      "value": 3.5,
+      "type": "Ocena koncowa",
+      "date": "2025-06-18",
+      "createdBy": 3,
+      "updatedAt": "2025-06-18T11:00:00.000Z"
+    },
+    {
+      "id": "28",
+      "studentId": 17,
+      "courseId": 1,
+      "value": 4,
+      "type": "Ocena koncowa",
+      "date": "2026-03-13",
+      "createdBy": 2,
+      "updatedAt": "2026-03-13T09:35:00.000Z"
+    },
+    {
+      "id": "29",
+      "studentId": 17,
+      "courseId": 2,
+      "value": 5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-09",
+      "createdBy": 13,
+      "updatedAt": "2026-03-09T12:20:00.000Z"
+    },
+    {
+      "id": "30",
+      "studentId": 18,
+      "courseId": 3,
+      "value": 4.5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-03",
+      "createdBy": 3,
+      "updatedAt": "2026-03-03T09:40:00.000Z"
+    },
+    {
+      "id": "31",
+      "studentId": 18,
+      "courseId": 4,
+      "value": 3.5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-16",
+      "createdBy": 11,
+      "updatedAt": "2026-03-16T10:45:00.000Z"
+    },
+    {
+      "id": "32",
+      "studentId": 19,
+      "courseId": 5,
+      "value": 4,
+      "type": "Ocena koncowa",
+      "date": "2026-02-22",
+      "createdBy": 12,
+      "updatedAt": "2026-02-22T11:10:00.000Z"
+    },
+    {
+      "id": "33",
+      "studentId": 19,
+      "courseId": 13,
+      "value": 3.5,
+      "type": "Ocena koncowa",
+      "date": "2025-06-22",
+      "createdBy": 11,
+      "updatedAt": "2025-06-22T10:25:00.000Z"
+    },
+    {
+      "id": "34",
+      "studentId": 20,
+      "courseId": 11,
+      "value": 5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-05",
+      "createdBy": 3,
+      "updatedAt": "2026-03-05T09:00:00.000Z"
+    },
+    {
+      "id": "35",
+      "studentId": 20,
+      "courseId": 12,
+      "value": 4.5,
+      "type": "Ocena koncowa",
+      "date": "2026-01-25",
+      "createdBy": 2,
+      "updatedAt": "2026-01-25T10:20:00.000Z"
+    },
+    {
+      "id": "36",
+      "studentId": 21,
+      "courseId": 11,
+      "value": 4,
+      "type": "Ocena koncowa",
+      "date": "2026-03-05",
+      "createdBy": 3,
+      "updatedAt": "2026-03-05T09:20:00.000Z"
+    },
+    {
+      "id": "37",
+      "studentId": 21,
+      "courseId": 12,
+      "value": 4,
+      "type": "Ocena koncowa",
+      "date": "2026-01-25",
+      "createdBy": 2,
+      "updatedAt": "2026-01-25T10:40:00.000Z"
+    },
+    {
+      "id": "38",
+      "studentId": 22,
+      "courseId": 8,
+      "value": 4.5,
+      "type": "Ocena koncowa",
+      "date": "2025-02-12",
+      "createdBy": 2,
+      "updatedAt": "2025-02-12T09:40:00.000Z"
+    },
+    {
+      "id": "39",
+      "studentId": 22,
+      "courseId": 9,
+      "value": 4.5,
+      "type": "Ocena koncowa",
+      "date": "2025-06-19",
+      "createdBy": 3,
+      "updatedAt": "2025-06-19T11:40:00.000Z"
+    },
+    {
+      "id": "40",
+      "studentId": 23,
+      "courseId": 5,
+      "value": 2,
+      "type": "Ocena koncowa",
+      "date": "2026-02-23",
+      "createdBy": 12,
+      "updatedAt": "2026-02-23T12:10:00.000Z"
+    },
+    {
+      "id": "41",
+      "studentId": 23,
+      "courseId": 6,
+      "value": 3,
+      "type": "Ocena koncowa",
+      "date": "2026-03-20",
+      "createdBy": 12,
+      "updatedAt": "2026-03-20T13:10:00.000Z"
+    },
+    {
+      "id": "42",
+      "studentId": 24,
+      "courseId": 1,
+      "value": 5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-13",
+      "createdBy": 2,
+      "updatedAt": "2026-03-13T09:50:00.000Z"
+    },
+    {
+      "id": "43",
+      "studentId": 24,
+      "courseId": 4,
+      "value": 5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-16",
+      "createdBy": 11,
+      "updatedAt": "2026-03-16T11:00:00.000Z"
+    },
+    {
+      "id": "44",
+      "studentId": 25,
+      "courseId": 1,
+      "value": 3,
+      "type": "Ocena koncowa",
+      "date": "2026-03-13",
+      "createdBy": 2,
+      "updatedAt": "2026-03-13T10:00:00.000Z"
+    },
+    {
+      "id": "45",
+      "studentId": 25,
+      "courseId": 3,
+      "value": 3.5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-04",
+      "createdBy": 3,
+      "updatedAt": "2026-03-04T09:50:00.000Z"
+    },
+    {
+      "id": "46",
+      "studentId": 26,
+      "courseId": 11,
+      "value": 5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-06",
+      "createdBy": 3,
+      "updatedAt": "2026-03-06T09:15:00.000Z"
+    },
+    {
+      "id": "47",
+      "studentId": 26,
+      "courseId": 12,
+      "value": 5,
+      "type": "Ocena koncowa",
+      "date": "2026-01-26",
+      "createdBy": 2,
+      "updatedAt": "2026-01-26T10:15:00.000Z"
+    },
+    {
+      "id": "48",
+      "studentId": 10,
+      "courseId": 14,
+      "value": 4,
+      "type": "Ocena koncowa",
+      "date": "2026-03-02",
+      "createdBy": 14,
+      "updatedAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "49",
+      "studentId": 10,
+      "courseId": 16,
+      "value": 4.5,
+      "type": "Ocena koncowa",
+      "date": "2026-01-19",
+      "createdBy": 14,
+      "updatedAt": "2026-01-19T10:00:00.000Z"
+    },
+    {
+      "id": "50",
+      "studentId": 27,
+      "courseId": 14,
+      "value": 5,
+      "type": "Ocena koncowa",
+      "date": "2026-03-02",
+      "createdBy": 14,
+      "updatedAt": "2026-03-02T12:15:00.000Z"
+    },
+    {
+      "id": "51",
+      "studentId": 27,
+      "courseId": 16,
+      "value": 4,
+      "type": "Ocena koncowa",
+      "date": "2026-01-19",
+      "createdBy": 14,
+      "updatedAt": "2026-01-19T10:20:00.000Z"
+    },
+    {
+      "id": "52",
+      "studentId": 28,
+      "courseId": 15,
+      "value": 3.5,
+      "type": "Ocena koncowa",
+      "date": "2025-02-05",
+      "createdBy": 14,
+      "updatedAt": "2025-02-05T10:00:00.000Z"
+    },
+    {
+      "id": "53",
+      "studentId": 29,
+      "courseId": 17,
+      "value": 4.5,
+      "type": "Ocena koncowa",
+      "date": "2025-02-07",
+      "createdBy": 15,
+      "updatedAt": "2025-02-07T09:00:00.000Z"
+    },
+    {
+      "id": "54",
+      "studentId": 29,
+      "courseId": 18,
+      "value": 4,
+      "type": "Ocena koncowa",
+      "date": "2025-06-12",
+      "createdBy": 15,
+      "updatedAt": "2025-06-12T09:00:00.000Z"
+    },
+    {
+      "id": "55",
+      "studentId": 30,
+      "courseId": 17,
+      "value": 3,
+      "type": "Ocena koncowa",
+      "date": "2025-02-07",
+      "createdBy": 15,
+      "updatedAt": "2025-02-07T09:20:00.000Z"
+    },
+    {
+      "id": "56",
+      "studentId": 30,
+      "courseId": 18,
+      "value": 3.5,
+      "type": "Ocena koncowa",
+      "date": "2025-06-12",
+      "createdBy": 15,
+      "updatedAt": "2025-06-12T09:20:00.000Z"
+    }
   ],
   "studentSemesterSummaries": [
-    { "id": 1, "studentId": 1, "semesterId": 1, "avgSem": 4.88, "avgYear": 4.62, "avgAll": 4.71, "status": "wpis na semestr - warunkowy" },
-    { "id": 2, "studentId": 1, "semesterId": 2, "avgSem": 4.5, "avgYear": 4.62, "avgAll": 4.66, "status": "zaliczony" },
-    { "id": 3, "studentId": 1, "semesterId": 3, "avgSem": 4.25, "avgYear": 4.42, "avgAll": 4.55, "status": "zaliczony" },
-    { "id": 4, "studentId": 1, "semesterId": 4, "avgSem": 4.5, "avgYear": 4.5, "avgAll": 4.5, "status": "zaliczony" },
-    { "id": 5, "studentId": 4, "semesterId": 1, "avgSem": 4.5, "avgYear": 4.45, "avgAll": 4.52, "status": "zaliczony" },
-    { "id": 6, "studentId": 5, "semesterId": 1, "avgSem": 3.75, "avgYear": 3.92, "avgAll": 4, "status": "zaliczony" },
-    { "id": 7, "studentId": 6, "semesterId": 1, "avgSem": 3.75, "avgYear": 4.05, "avgAll": 4.1, "status": "zaliczony" },
-    { "id": 8, "studentId": 6, "semesterId": 2, "avgSem": 4.25, "avgYear": 4.05, "avgAll": 4.1, "status": "zaliczony" },
-    { "id": 9, "studentId": 7, "semesterId": 1, "avgSem": 4.75, "avgYear": 4.8, "avgAll": 4.76, "status": "zaliczony" },
-    { "id": 10, "studentId": 8, "semesterId": 1, "avgSem": 4, "avgYear": 4.08, "avgAll": 4.11, "status": "zaliczony" },
-    { "id": 11, "studentId": 9, "semesterId": 1, "avgSem": 5, "avgYear": 4.83, "avgAll": 4.7, "status": "zaliczony" },
-    { "id": 12, "studentId": 9, "semesterId": 2, "avgSem": 4.75, "avgYear": 4.83, "avgAll": 4.7, "status": "zaliczony" },
-    { "id": 13, "studentId": 16, "semesterId": 3, "avgSem": 3.25, "avgYear": 3.4, "avgAll": 3.5, "status": "zaliczony warunkowo" },
-    { "id": 14, "studentId": 17, "semesterId": 1, "avgSem": 4.5, "avgYear": 4.5, "avgAll": 4.44, "status": "zaliczony" },
-    { "id": 15, "studentId": 18, "semesterId": 1, "avgSem": 4, "avgYear": 4.02, "avgAll": 4.08, "status": "zaliczony" },
-    { "id": 16, "studentId": 19, "semesterId": 1, "avgSem": 4, "avgYear": 3.9, "avgAll": 3.98, "status": "zaliczony" },
-    { "id": 17, "studentId": 20, "semesterId": 1, "avgSem": 5, "avgYear": 4.75, "avgAll": 4.75, "status": "zaliczony" },
-    { "id": 18, "studentId": 20, "semesterId": 2, "avgSem": 4.5, "avgYear": 4.75, "avgAll": 4.75, "status": "zaliczony" },
-    { "id": 19, "studentId": 21, "semesterId": 1, "avgSem": 4, "avgYear": 4, "avgAll": 4, "status": "zaliczony" },
-    { "id": 20, "studentId": 22, "semesterId": 3, "avgSem": 4.5, "avgYear": 4.5, "avgAll": 4.48, "status": "zaliczony" },
-    { "id": 21, "studentId": 23, "semesterId": 1, "avgSem": 2.5, "avgYear": 2.85, "avgAll": 3.1, "status": "niezaliczony" },
-    { "id": 22, "studentId": 24, "semesterId": 1, "avgSem": 5, "avgYear": 4.9, "avgAll": 4.85, "status": "zaliczony" },
-    { "id": 23, "studentId": 25, "semesterId": 1, "avgSem": 3.25, "avgYear": 3.35, "avgAll": 3.4, "status": "zaliczony warunkowo" },
-    { "id": 24, "studentId": 26, "semesterId": 1, "avgSem": 5, "avgYear": 5, "avgAll": 4.9, "status": "zaliczony" },
-    { "id": 25, "studentId": 10, "semesterId": 1, "avgSem": 4.25, "avgYear": 4.15, "avgAll": 4.2, "status": "zaliczony" },
-    { "id": 26, "studentId": 27, "semesterId": 1, "avgSem": 4.5, "avgYear": 4.5, "avgAll": 4.5, "status": "zaliczony" },
-    { "id": 27, "studentId": 28, "semesterId": 4, "avgSem": 3.5, "avgYear": 3.5, "avgAll": 3.5, "status": "zaliczony" },
-    { "id": 28, "studentId": 29, "semesterId": 3, "avgSem": 4.25, "avgYear": 4.25, "avgAll": 4.25, "status": "zaliczony" },
-    { "id": 29, "studentId": 30, "semesterId": 3, "avgSem": 3.25, "avgYear": 3.25, "avgAll": 3.25, "status": "zaliczony warunkowo" }
-  ]
+    {
+      "id": "1",
+      "studentId": 1,
+      "semesterId": 1,
+      "avgSem": 4.88,
+      "avgYear": 4.62,
+      "avgAll": 4.71,
+      "status": "wpis na semestr - warunkowy"
+    },
+    {
+      "id": "2",
+      "studentId": 1,
+      "semesterId": 2,
+      "avgSem": 4.5,
+      "avgYear": 4.62,
+      "avgAll": 4.66,
+      "status": "zaliczony"
+    },
+    {
+      "id": "3",
+      "studentId": 1,
+      "semesterId": 3,
+      "avgSem": 4.25,
+      "avgYear": 4.42,
+      "avgAll": 4.55,
+      "status": "zaliczony"
+    },
+    {
+      "id": "4",
+      "studentId": 1,
+      "semesterId": 4,
+      "avgSem": 4.5,
+      "avgYear": 4.5,
+      "avgAll": 4.5,
+      "status": "zaliczony"
+    },
+    {
+      "id": "5",
+      "studentId": 4,
+      "semesterId": 1,
+      "avgSem": 4.5,
+      "avgYear": 4.45,
+      "avgAll": 4.52,
+      "status": "zaliczony"
+    },
+    {
+      "id": "6",
+      "studentId": 5,
+      "semesterId": 1,
+      "avgSem": 3.75,
+      "avgYear": 3.92,
+      "avgAll": 4,
+      "status": "zaliczony"
+    },
+    {
+      "id": "7",
+      "studentId": 6,
+      "semesterId": 1,
+      "avgSem": 3.75,
+      "avgYear": 4.05,
+      "avgAll": 4.1,
+      "status": "zaliczony"
+    },
+    {
+      "id": "8",
+      "studentId": 6,
+      "semesterId": 2,
+      "avgSem": 4.25,
+      "avgYear": 4.05,
+      "avgAll": 4.1,
+      "status": "zaliczony"
+    },
+    {
+      "id": "9",
+      "studentId": 7,
+      "semesterId": 1,
+      "avgSem": 4.75,
+      "avgYear": 4.8,
+      "avgAll": 4.76,
+      "status": "zaliczony"
+    },
+    {
+      "id": "10",
+      "studentId": 8,
+      "semesterId": 1,
+      "avgSem": 4,
+      "avgYear": 4.08,
+      "avgAll": 4.11,
+      "status": "zaliczony"
+    },
+    {
+      "id": "11",
+      "studentId": 9,
+      "semesterId": 1,
+      "avgSem": 5,
+      "avgYear": 4.83,
+      "avgAll": 4.7,
+      "status": "zaliczony"
+    },
+    {
+      "id": "12",
+      "studentId": 9,
+      "semesterId": 2,
+      "avgSem": 4.75,
+      "avgYear": 4.83,
+      "avgAll": 4.7,
+      "status": "zaliczony"
+    },
+    {
+      "id": "13",
+      "studentId": 16,
+      "semesterId": 3,
+      "avgSem": 3.25,
+      "avgYear": 3.4,
+      "avgAll": 3.5,
+      "status": "zaliczony warunkowo"
+    },
+    {
+      "id": "14",
+      "studentId": 17,
+      "semesterId": 1,
+      "avgSem": 4.5,
+      "avgYear": 4.5,
+      "avgAll": 4.44,
+      "status": "zaliczony"
+    },
+    {
+      "id": "15",
+      "studentId": 18,
+      "semesterId": 1,
+      "avgSem": 4,
+      "avgYear": 4.02,
+      "avgAll": 4.08,
+      "status": "zaliczony"
+    },
+    {
+      "id": "16",
+      "studentId": 19,
+      "semesterId": 1,
+      "avgSem": 4,
+      "avgYear": 3.9,
+      "avgAll": 3.98,
+      "status": "zaliczony"
+    },
+    {
+      "id": "17",
+      "studentId": 20,
+      "semesterId": 1,
+      "avgSem": 5,
+      "avgYear": 4.75,
+      "avgAll": 4.75,
+      "status": "zaliczony"
+    },
+    {
+      "id": "18",
+      "studentId": 20,
+      "semesterId": 2,
+      "avgSem": 4.5,
+      "avgYear": 4.75,
+      "avgAll": 4.75,
+      "status": "zaliczony"
+    },
+    {
+      "id": "19",
+      "studentId": 21,
+      "semesterId": 1,
+      "avgSem": 4,
+      "avgYear": 4,
+      "avgAll": 4,
+      "status": "zaliczony"
+    },
+    {
+      "id": "20",
+      "studentId": 22,
+      "semesterId": 3,
+      "avgSem": 4.5,
+      "avgYear": 4.5,
+      "avgAll": 4.48,
+      "status": "zaliczony"
+    },
+    {
+      "id": "21",
+      "studentId": 23,
+      "semesterId": 1,
+      "avgSem": 2.5,
+      "avgYear": 2.85,
+      "avgAll": 3.1,
+      "status": "niezaliczony"
+    },
+    {
+      "id": "22",
+      "studentId": 24,
+      "semesterId": 1,
+      "avgSem": 5,
+      "avgYear": 4.9,
+      "avgAll": 4.85,
+      "status": "zaliczony"
+    },
+    {
+      "id": "23",
+      "studentId": 25,
+      "semesterId": 1,
+      "avgSem": 3.25,
+      "avgYear": 3.35,
+      "avgAll": 3.4,
+      "status": "zaliczony warunkowo"
+    },
+    {
+      "id": "24",
+      "studentId": 26,
+      "semesterId": 1,
+      "avgSem": 5,
+      "avgYear": 5,
+      "avgAll": 4.9,
+      "status": "zaliczony"
+    },
+    {
+      "id": "25",
+      "studentId": 10,
+      "semesterId": 1,
+      "avgSem": 4.25,
+      "avgYear": 4.15,
+      "avgAll": 4.2,
+      "status": "zaliczony"
+    },
+    {
+      "id": "26",
+      "studentId": 27,
+      "semesterId": 1,
+      "avgSem": 4.5,
+      "avgYear": 4.5,
+      "avgAll": 4.5,
+      "status": "zaliczony"
+    },
+    {
+      "id": "27",
+      "studentId": 28,
+      "semesterId": 4,
+      "avgSem": 3.5,
+      "avgYear": 3.5,
+      "avgAll": 3.5,
+      "status": "zaliczony"
+    },
+    {
+      "id": "28",
+      "studentId": 29,
+      "semesterId": 3,
+      "avgSem": 4.25,
+      "avgYear": 4.25,
+      "avgAll": 4.25,
+      "status": "zaliczony"
+    },
+    {
+      "id": "29",
+      "studentId": 30,
+      "semesterId": 3,
+      "avgSem": 3.25,
+      "avgYear": 3.25,
+      "avgAll": 3.25,
+      "status": "zaliczony warunkowo"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
